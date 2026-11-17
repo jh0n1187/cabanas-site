@@ -95,7 +95,7 @@ ul,ol{padding:0;list-style:none}
 .sec--bordo .rotulo{color:var(--dourado-cl)}
 .h2{font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.6vw,44px);line-height:1.1;color:var(--bordo-esc);text-wrap:balance}
 .sec--bordo .h2{color:var(--papel)}
-.btn{min-height:48px;padding:0 22px;border-radius:var(--r);display:inline-flex;align-items:center;justify-content:center;font-weight:600;font-size:16px;text-decoration:none;border:2px solid transparent;transition:background-color .15s,color .15s;text-align:center}
+.btn{min-height:48px;padding:0 22px;border-radius:var(--r);display:inline-flex;align-items:center;justify-content:center;font-weight:600;font-size:16px;text-decoration:none;border:2px solid transparent;transition:background-color .25s,color .25s,transform .3s cubic-bezier(.22,1,.36,1);text-align:center}
 .btn--lg{min-height:52px;font-size:17px;padding:0 24px}
 .btn--xl{min-height:56px;font-size:17px;padding:0 28px}
 .btn--ouro{background:var(--dourado);color:var(--noite)}
@@ -109,7 +109,10 @@ ul,ol{padding:0;list-style:none}
 .acoes{display:flex;flex-wrap:wrap;gap:10px}
 
 /* Cabeçalho */
-.topo{position:sticky;top:0;z-index:50;background:var(--bordo)}
+.topo{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--bordo);box-shadow:0 4px 20px rgba(42,10,12,.16);transition:background-color .35s,box-shadow .35s}
+.topo::before{content:"";position:absolute;inset:0 0 -48px;z-index:-1;pointer-events:none;background:linear-gradient(to bottom,rgba(42,10,12,.92),rgba(42,10,12,.65) 55%,transparent);opacity:0;transition:opacity .35s}
+.topo--banner{background:transparent;box-shadow:none}
+.topo--banner::before{opacity:1}
 .topo .wrap{padding:8px 20px;display:flex;align-items:center;gap:24px;min-height:72px}
 .topo__logo{margin-right:auto;border-radius:6px}
 .topo__logo img{width:124px;height:56px}
@@ -119,10 +122,10 @@ ul,ol{padding:0;list-style:none}
 
 /* Hero */
 .hero{position:relative;background:var(--noite);color:var(--papel);overflow:hidden}
-.hero__foto{position:absolute;inset:0}
+.hero__foto{position:absolute;inset:0;overflow:hidden}
 .hero__foto img{width:100%;height:100%;object-fit:cover;object-position:50% 15%}
 .hero__foto::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(42,10,12,.96) 0%,rgba(42,10,12,.9) 62%,rgba(42,10,12,.3) 84%,rgba(42,10,12,0) 100%)}
-.hero__in{position:relative;max-width:var(--max);margin:0 auto;padding:24px 20px 28px;min-height:min(760px,calc(100svh - 72px));display:flex;flex-direction:column;justify-content:flex-end}
+.hero__in{position:relative;max-width:var(--max);margin:0 auto;padding:96px 20px 28px;min-height:min(832px,100svh);display:flex;flex-direction:column;justify-content:flex-end}
 .hero__txt{display:flex;flex-direction:column;gap:14px}
 .status{align-self:flex-start;display:flex;align-items:center;gap:8px;background:var(--papel);color:var(--texto);border-radius:999px;padding:7px 14px;font-size:15px;font-weight:600}
 .status__ponto{width:9px;height:9px;border-radius:50%;background:var(--dourado);flex:none}
@@ -151,7 +154,7 @@ ul,ol{padding:0;list-style:none}
 .card{background:var(--papel);border:1px solid var(--borda);border-radius:var(--r);overflow:hidden}
 .card a{display:flex;flex-direction:column;height:100%;text-decoration:none;color:var(--texto);border-radius:0}
 .card__img{aspect-ratio:4/3;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 45%,#84202A 0%,var(--bordo) 60%)}
-.card__img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card__img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1)}
 .card__sem{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center;font-family:var(--serif);font-size:32px;line-height:1.1;color:var(--papel)}
 .card__sem::after{content:"";width:28px;height:2px;background:var(--dourado)}
 .tag{position:absolute;top:12px;left:12px;background:var(--dourado);color:var(--noite);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:6px}
@@ -261,14 +264,14 @@ ul,ol{padding:0;list-style:none}
 
 /* Barra fixa no celular */
 .barra-esp{height:calc(88px + env(safe-area-inset-bottom));background:var(--noite)}
-.barra{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--papel);border-top:1px solid var(--borda);padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;box-shadow:0 -6px 20px -10px rgba(42,10,12,.35);transition:transform .15s}
+.barra{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--papel);border-top:1px solid var(--borda);padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;box-shadow:0 -6px 20px -10px rgba(42,10,12,.35);transition:transform .35s cubic-bezier(.22,1,.36,1)}
 .barra.oculta{transform:translateY(110%)}
 .barra .btn{min-height:52px}
 .barra .btn--bordo{flex:1;font-size:17px}
 .barra .btn--linha{flex:none;min-width:104px;font-size:15px}
 
 /* Voltar ao topo: aparece depois que o hero sai da tela; no celular fica acima da barra fixa */
-.topo-btn{position:fixed;right:16px;bottom:calc(88px + env(safe-area-inset-bottom) + 12px);z-index:55;width:48px;height:48px;border-radius:50%;background:var(--bordo);color:var(--papel);border:2px solid var(--papel);display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 14px rgba(42,10,12,.3);transition:opacity .2s,transform .2s,background-color .15s}
+.topo-btn{position:fixed;right:16px;bottom:calc(88px + env(safe-area-inset-bottom) + 12px);z-index:55;width:48px;height:48px;border-radius:50%;background:var(--bordo);color:var(--papel);border:2px solid var(--papel);display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 14px rgba(42,10,12,.3);transition:opacity .35s,transform .35s cubic-bezier(.22,1,.36,1),background-color .25s}
 .topo-btn:hover{background:var(--bordo-esc);color:var(--papel)}
 .topo-btn svg{width:22px;height:22px}
 .topo-btn.oculto{opacity:0;transform:translateY(12px);pointer-events:none}
@@ -283,6 +286,23 @@ ul,ol{padding:0;list-style:none}
   .barra,.barra-esp{display:none}
   .topo-btn{right:24px;bottom:24px}
 }
+/* Movimento discreto, sem esconder conteúdo nem atrasar os botões de pedido. */
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .btn:hover{transform:translateY(-2px)}
+  .btn:active{transform:translateY(0)}
+  .card a:hover .card__img img,.card a:focus-visible .card__img img{transform:scale(1.035)}
+}
+/* Parallax nativo: só a foto se move, com recorte extra para não expor as bordas.
+   Navegadores sem suporte mantêm a imagem estática. */
+@supports (animation-timeline:scroll()){
+  @media (hover:hover) and (pointer:fine){
+    @keyframes foto-profundidade{
+      from{transform:translateY(-180px)}
+      to{transform:translateY(0)}
+    }
+    .hero__foto img{height:calc(100% + 180px);animation:foto-profundidade linear both;animation-timeline:scroll(root block);animation-range:0px 700px}
+  }
+}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 </head>
@@ -290,7 +310,7 @@ ul,ol{padding:0;list-style:none}
 
 <header class="topo">
   <div class="wrap">
-    <a class="topo__logo" href="#topo" aria-label="Pizzaria Cabanas, início"><img src="/assets/img/logo-cabanas-248.webp" alt="Pizzaria Cabanas – Pizzaria Delivery" width="124" height="56"></a>
+    <a class="topo__logo" href="#topo" aria-label="Pizzaria Cabanas, início"><img src="/assets/img/logo-cabanas-transparente-248.webp" alt="Pizzaria Cabanas – Pizzaria Delivery" width="124" height="56"></a>
     <nav aria-label="Principal">
       <a href="#cardapio">Cardápio</a>
       <a href="#como-pedir">Como pedir</a>
@@ -600,6 +620,13 @@ ul,ol{padding:0;list-style:none}
 
 <script>
 (function () {
+  // Integrado ao banner no início; fundo sólido ao rolar, sem deslocar o conteúdo.
+  var cabecalho = document.querySelector('.topo');
+  function atualizaCabecalho() { cabecalho.classList.toggle('topo--banner', window.scrollY <= 160); }
+  atualizaCabecalho();
+  window.addEventListener('scroll', atualizaCabecalho, { passive: true });
+  window.addEventListener('pageshow', atualizaCabecalho);
+
   // Aviso manual de fechamento (feriados/folgas). null = desligado.
   // Ex.: { ate: '2026-12-25', volta: 'sexta, 26/12' } → "Hoje estamos fechados · voltamos sexta, 26/12" até a data (inclusive).
   var AVISO_FECHADO = null;
@@ -727,7 +754,38 @@ ul,ol{padding:0;list-style:none}
   // Voltar ao topo: some enquanto o hero está visível; o clique sobe até o início da página (com o cabeçalho)
   var topoBtn = document.getElementById('topo-btn'), hero = document.querySelector('.hero');
   if (topoBtn) {
-    topoBtn.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0 }); topoBtn.blur(); });
+    var subida = 0;
+    function cancelaSubida() { cancelAnimationFrame(subida); subida = 0; }
+    // A pessoa pode interromper a animação a qualquer momento para continuar navegando.
+    window.addEventListener('wheel', cancelaSubida, { passive: true });
+    window.addEventListener('touchstart', cancelaSubida, { passive: true });
+    window.addEventListener('pointerdown', cancelaSubida, { passive: true });
+    window.addEventListener('keydown', function (e) {
+      if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Escape', 'Tab'].includes(e.key)) cancelaSubida();
+    });
+    topoBtn.addEventListener('click', function (e) {
+      e.preventDefault(); cancelaSubida();
+      var origem = window.scrollY, inicio = null;
+      var duracao = Math.min(1100, Math.max(650, origem * .22));
+      function conclui() {
+        var destino = document.getElementById('topo');
+        destino.setAttribute('tabindex', '-1');
+        destino.focus({ preventScroll: true });
+      }
+      // Rolagem acionada pelo clique permanece suave, conforme a preferência do site.
+      if (!origem) {
+        window.scrollTo({ top: 0, behavior: 'instant' }); conclui(); return;
+      }
+      function quadroTopo(t) {
+        if (inicio === null) inicio = t;
+        var p = Math.min((t - inicio) / duracao, 1);
+        var curva = p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+        window.scrollTo({ top: origem * (1 - curva), behavior: 'instant' });
+        if (p < 1) subida = requestAnimationFrame(quadroTopo);
+        else { subida = 0; conclui(); }
+      }
+      subida = requestAnimationFrame(quadroTopo);
+    });
     if ('IntersectionObserver' in window && hero) {
       topoBtn.classList.add('oculto');
       new IntersectionObserver(function (e) {

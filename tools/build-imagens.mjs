@@ -7,6 +7,7 @@ import { createRequire } from 'node:module';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { geraLogoTransparente } from './logo-transparente.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(join(process.env.SHARP_DIR || root, 'package.json'));
@@ -36,10 +37,8 @@ for (const f of fotos) {
   }
 }
 
-// Logo horizontal para o cabeçalho (fundo bordô igual ao do header) — 2x de 124x56
-const logoCrop = { left: 200, top: 455, width: 1100, height: 497 };
-await sharp(src('logo.png')).extract(logoCrop).resize({ width: 248, height: 112, fit: 'cover' })
-  .webp({ quality: 90 }).toFile(join(out, 'logo-cabanas-248.webp'));
+// Logo horizontal com transparência real — 2x de 124x56.
+await geraLogoTransparente(sharp, src('logo.png'), join(out, 'logo-cabanas-transparente-248.webp'));
 
 // Ícones (quadrado centrado no logo)
 const iconCrop = { left: 175, top: 175, width: 1150, height: 1150 };
