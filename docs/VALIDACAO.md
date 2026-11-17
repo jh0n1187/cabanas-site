@@ -48,7 +48,11 @@ Os avisos de cache e compressão vêm do servidor de teste local. No Cloudflare,
 - ✅ **Sitemap:** enviado. Logo após o envio aparece "Não foi possível buscar", o que é normal para domínio novo, e o Google tenta de novo sozinho.
 - ✅ **Página inicial:** indexação solicitada.
 - ✅ **Bing Webmaster Tools:** login com a conta Google da pizzaria e site importado do Search Console, que dá acesso só de leitura e dispensa nova verificação. O sitemap foi enviado à parte, porque a importação veio com 0 sitemaps, e está em processamento.
-- ⏳ **Pendentes:** Perfil da Empresa no Google (link do site) e conferir o Web Analytics no painel do Cloudflare.
+- ✅ **Perfil da Empresa no Google:** o campo "Site" passou de `cabanaspizzas.menudino.com` para `https://pizzariacabanas.com.br/?utm_source=gbp`, em revisão pelo Google (cerca de 10 min). O "Link do cardápio" continua no MenuDino, de propósito.
+- ⏳ **Pendentes:**
+  - Conferir o Web Analytics no painel do Cloudflare.
+  - Ajustar a descrição do perfil, que diz "exclusivamente com delivery" mas a loja também tem retirada no balcão.
+  - Rever a categoria secundária "Restaurante" (aguarda o ok do dono).
 
 A verificação automática do Search Console via Cloudflare abre um pop-up de autorização. Se ele não abrir, use "Qualquer provedor de DNS" e crie o TXT manualmente no painel (DNS → Registros → Adicionar registro → TXT, nome `@`).
 
