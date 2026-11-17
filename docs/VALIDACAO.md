@@ -41,6 +41,20 @@ Os avisos de cache e compressão vêm do servidor de teste local. No Cloudflare,
 - **Respostas do servidor:** HTTPS, `http` e `www` com 301, 404 personalizado, Brotli e cache de 1 ano em `/assets/*`. JSON-LD Restaurant + FAQPage válidos, com o FAQ igual ao texto visível.
 - **API do PageSpeed sem chave:** estoura a cota diária. Use o site pagespeed.web.dev ou o Lighthouse local contra a URL.
 
+**PageSpeed Insights oficial (17/11/2026, 15h03):**
+- **Celular:** 100 / 100 / 100 / 100. FCP 0,8 s, LCP 1,8 s, TBT 0 ms, CLS 0. Navegação agêntica 2/2.
+- **Computador:** 100 / 100 / 100 / 100. LCP 0,4 s, CLS 0,003.
+- **Sugestões que não afetam a nota:**
+  - "Melhorar a entrega de imagens": cerca de 88 KiB.
+  - "JavaScript legado" (10 KiB) e cache de 4 KiB: vêm do script do Cloudflare Web Analytics.
+  - "Reflow forçado": medição inicial do carrossel.
+- A primeira tentativa deu "Não foi possível resolver o URL": cache de DNS do Google logo após a migração. Na segunda deu certo.
+
+**Teste de pesquisa aprimorada (Google):**
+- **Resultado:** 2 itens válidos, Empresas locais (Restaurant) e Organização.
+- **Único aviso não crítico:** `priceRange` ausente, que é opcional. Ficou de fora por decisão do briefing.
+- **FAQPage:** não aparece como item, o que é esperado, porque o Google não gera destaque de FAQ para restaurantes.
+
 ## 3. Indexação (uma vez, depois que o domínio estiver ativo)
 
 **Situação em 17/11/2026:**
