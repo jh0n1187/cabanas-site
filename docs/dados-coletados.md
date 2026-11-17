@@ -95,3 +95,4 @@ O cardápio tem cerca de 60 sabores inteiros, 20 Baby e bebidas.
 - **Bairros a até 3 km** (levantados no OpenStreetMap/Nominatim em 17/11/2026, do mais perto ao mais longe): Carandá Bosque, Vivendas do Bosque, Santa Fé, Veraneio, Chácara Cachoeira, Autonomista, Mata do Jacinto, Jardim dos Estados, Cruzeiro, Margarida, Novos Estados, Monte Castelo e Tiradentes. Os demais bairros ficam cobertos pelo texto do raio de 10 km.
 - **Hospital Cassems** (Av. Mato Grosso, vizinho ao Unimed, visto no mapa) entrou na lista de hotéis e hospitais.
 - **Mapa:** carrega sozinho (iframe com `loading="lazy"`), sem botão.
+- **Carrossel de depoimentos** (17/11/2026): 11 depoimentos reais, 9 do Google e 2 do iFood (os únicos do iFood com comentário escrito). Só a pontuação foi ajustada. O iFood já mostra a loja como "Pizzaria Cabanas", com nota 4,9 (27 avaliações). Uma avaliação de 1 estrela no iFood (07/11/2026) diz que a borda paga não veio: vale responder ao cliente.

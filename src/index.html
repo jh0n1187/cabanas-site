@@ -168,8 +168,15 @@ ul,ol{padding:0;list-style:none}
 .aval-sub{margin:10px 0 16px;font-size:18px;line-height:1.55;max-width:760px;color:var(--texto);text-wrap:pretty}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
 .tags li{background:var(--papel);border:1px solid var(--borda);border-radius:999px;padding:7px 14px;font-size:15px;font-weight:600;color:var(--bordo)}
-.revs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
-.rev{background:var(--papel);border:1px solid var(--borda);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:18px}
+/* Carrossel: rolagem horizontal com encaixe (scroll-snap); 1 card + pedaço do próximo no celular, 3 no desktop */
+.revs{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:2px 2px 6px;margin:0 -2px;overscroll-behavior-x:contain}
+.revs::-webkit-scrollbar{display:none}
+.rev{flex:0 0 min(86%,360px);scroll-snap-align:start;background:var(--papel);border:1px solid var(--borda);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:18px}
+.carrossel__nav{display:flex;gap:8px;margin-top:14px}
+.carrossel__btn{width:48px;height:48px;border-radius:50%;border:2px solid var(--bordo);background:var(--papel);color:var(--bordo);font-size:20px;cursor:pointer;transition:background-color .15s,color .15s}
+.carrossel__btn:hover{background:var(--bordo);color:var(--papel)}
+.carrossel__btn:disabled{opacity:.35;cursor:default;background:var(--papel);color:var(--bordo)}
+@media (min-width:900px){.rev{flex-basis:calc((100% - 32px)/3)}}
 .rev::before{content:"\201C";font-family:var(--serif);font-size:48px;line-height:.6;color:var(--dourado);height:20px}
 .rev blockquote{font-family:var(--serif);font-size:20px;line-height:1.4;text-wrap:pretty}
 .rev figcaption{margin-top:auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-size:15px;color:var(--suave)}
@@ -386,10 +393,26 @@ ul,ol{padding:0;list-style:none}
       <li>Preparo rápido</li>
       <li>Qualidade que não muda</li>
     </ul>
-    <div class="revs">
-      <figure class="rev"><blockquote>Foi a melhor pizza que já comi! Sou de SP e estou de passagem em Campo Grande, resolvi experimentar e foi a melhor escolha… atendimento de excelência, rapidez no preparo e o sabor ESPETACULAR</blockquote><figcaption><strong>Carla Mikcel</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Ver no Google</a></figcaption></figure>
-      <figure class="rev"><blockquote>Maravilhoso, melhor pizza de Campo Grande. Já faz 3 anos que eu aprecio a pizza da Cabanas e até hoje, rodando Campo Grande, poucas chegaram perto</blockquote><figcaption><strong>Juan Saab</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Ver no Google</a></figcaption></figure>
-      <figure class="rev"><blockquote>É a melhor pizza de Campo Grande! Pedimos sempre, e a qualidade dos ingredientes sempre foi a mesma, nunca nos decepcionamos.</blockquote><figcaption><strong>Juliana Romero</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Ver no Google</a></figcaption></figure>
+    <!-- Carrossel manual (sem rolagem automática): arrastar no celular ou usar as setas.
+         Depoimentos reais e públicos do Google e do iFood (coletados em 17/11/2026); só a pontuação foi ajustada. -->
+    <div class="carrossel" role="region" aria-roledescription="carrossel" aria-label="Depoimentos de clientes">
+      <div class="revs" id="revs" tabindex="0">
+        <figure class="rev"><blockquote>Foi a melhor pizza que já comi! Sou de SP e estou de passagem em Campo Grande, resolvi experimentar e foi a melhor escolha… atendimento de excelência, rapidez no preparo e o sabor ESPETACULAR</blockquote><figcaption><strong>Carla Mikcel</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
+        <figure class="rev"><blockquote>Maravilhoso, melhor pizza de Campo Grande. Já faz 3 anos que eu aprecio a pizza da Cabanas e até hoje, rodando Campo Grande, poucas chegaram perto</blockquote><figcaption><strong>Juan Saab</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
+        <figure class="rev"><blockquote>Cabanas não tem erro! Sempre surpreende... uma delícia! Só peçam, não vão se arrepender!</blockquote><figcaption><strong>Giziely</strong><a href="https://www.ifood.com.br/delivery/campo-grande-ms/pizzaria-cabanas-caranda-bosque/bbf4cc48-bc25-472c-88c7-6c3fb110c2bf" target="_blank" rel="noopener">iFood</a></figcaption></figure>
+        <figure class="rev"><blockquote>Pizza deliciosa, com uma borda bem recheada! A melhor de Campo Grande, super indico.</blockquote><figcaption><strong>Lahis Siqueira</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
+        <figure class="rev"><blockquote>É a melhor pizza de Campo Grande! Pedimos sempre, e a qualidade dos ingredientes sempre foi a mesma, nunca nos decepcionamos.</blockquote><figcaption><strong>Juliana Romero</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
+        <figure class="rev"><blockquote>Pizza maravilhosa! Fazia muito tempo que não comia uma pizza tão caprichada! Surra de recheio! Super recomendo!</blockquote><figcaption><strong>Ana Pessoa</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
+        <figure class="rev"><blockquote>Excelente. Lugar para pessoas com paladar exigente e apreciadores de uma ótima pizza. Para mim, a melhor de CG.</blockquote><figcaption><strong>Lucas Rojas</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
+        <figure class="rev"><blockquote>Atravesso a cidade pra buscar pizza com eles! Muito boa!</blockquote><figcaption><strong>Domyngos Santana</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
+        <figure class="rev"><blockquote>Praticidade no pedido, a pizza ficou pronta rápido, atendimento cortês, preço justo e o principal: a pizza estava uma delícia.</blockquote><figcaption><strong>Stanley Centurion</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
+        <figure class="rev"><blockquote>Cliente há anos. Uma das melhores pizzas de Campo Grande, produto de qualidade e preço justo.</blockquote><figcaption><strong>Luiz Bonelli</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
+        <figure class="rev"><blockquote>Melhor pizzaria de CG.</blockquote><figcaption><strong>Luciana</strong><a href="https://www.ifood.com.br/delivery/campo-grande-ms/pizzaria-cabanas-caranda-bosque/bbf4cc48-bc25-472c-88c7-6c3fb110c2bf" target="_blank" rel="noopener">iFood</a></figcaption></figure>
+      </div>
+      <div class="carrossel__nav">
+        <button type="button" class="carrossel__btn" data-dir="-1" aria-controls="revs" aria-label="Depoimentos anteriores">←</button>
+        <button type="button" class="carrossel__btn" data-dir="1" aria-controls="revs" aria-label="Próximos depoimentos">→</button>
+      </div>
     </div>
     <div class="acoes">
       <a class="btn btn--bordo" href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Ver todas as avaliações no Google</a>
@@ -602,6 +625,23 @@ ul,ol{padding:0;list-style:none}
   var txt = document.getElementById('status-txt'), ponto = document.querySelector('.status__ponto');
   function atualiza() { var s = status(); txt.textContent = s[0]; ponto.style.background = s[1]; }
   try { atualiza(); setInterval(atualiza, 60000); } catch (e) { /* mantém o horário estático */ }
+
+  // Carrossel de depoimentos: setas avançam um card; desabilitam no início/fim. Sem rolagem automática.
+  var revs = document.getElementById('revs');
+  if (revs) {
+    var btns = document.querySelectorAll('.carrossel__btn');
+    var passo = function () { var c = revs.querySelector('.rev'); return c ? c.getBoundingClientRect().width + 16 : revs.clientWidth; };
+    var estado = function () {
+      btns[0].disabled = revs.scrollLeft <= 2;
+      btns[1].disabled = revs.scrollLeft + revs.clientWidth >= revs.scrollWidth - 2;
+    };
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () { revs.scrollBy({ left: passo() * +b.dataset.dir }); });
+    });
+    revs.addEventListener('scroll', estado, { passive: true });
+    window.addEventListener('resize', estado);
+    estado();
+  }
 
   // Barra fixa do celular: só aparece quando os botões do hero saem da tela
   var barra = document.getElementById('barra'), cta = document.getElementById('hero-cta');
