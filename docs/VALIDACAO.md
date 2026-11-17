@@ -52,7 +52,7 @@ Os avisos de cache e compressão vêm do servidor de teste local. No Cloudflare,
 
 **Teste de pesquisa aprimorada (Google):**
 - **Resultado:** 2 itens válidos, Empresas locais (Restaurant) e Organização.
-- **Único aviso não crítico:** `priceRange` ausente, que é opcional. Ficou de fora por decisão do briefing.
+- **Aviso não crítico:** `priceRange` ausente. Resolvido em 17/11/2026 com `"priceRange": "$$"`, aprovado pelo dono: indica a faixa sem mostrar valores.
 - **FAQPage:** não aparece como item, o que é esperado, porque o Google não gera destaque de FAQ para restaurantes.
 
 ## 3. Indexação (uma vez, depois que o domínio estiver ativo)
