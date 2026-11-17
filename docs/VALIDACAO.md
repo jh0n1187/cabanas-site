@@ -34,6 +34,13 @@ Os avisos de cache e compressão vêm do servidor de teste local. No Cloudflare,
 | **Redirecionamentos** | `www` → domínio sem www (301), `http` → `https`, e `/pagina-que-nao-existe` → 404 personalizado |
 | **Plugin claude-seo** | `/seo-audit https://pizzariacabanas.com.br`, `/seo-local`, `/seo-geo` |
 
+**Primeiro deploy (17/11/2026), Lighthouse rodado contra o site no ar:**
+- **Celular:** 97 / 100 / 96 / 100. LCP 2,5 s, FCP 1,8 s, TBT 0 ms, CLS 0.
+- **Desktop:** 100 / 100 / 96 / 100. LCP 0,6 s.
+- **Boas práticas 96:** vem só do script do Cloudflare Web Analytics (`static.cloudflareinsights.com`), que não carregou na máquina de teste por bloqueio de DNS ou de anúncios. Não é problema do site.
+- **Respostas do servidor:** HTTPS, `http` e `www` com 301, 404 personalizado, Brotli e cache de 1 ano em `/assets/*`. JSON-LD Restaurant + FAQPage válidos, com o FAQ igual ao texto visível.
+- **API do PageSpeed sem chave:** estoura a cota diária. Use o site pagespeed.web.dev ou o Lighthouse local contra a URL.
+
 ## 3. Indexação (uma vez, depois que o domínio estiver ativo)
 1. **Google Search Console:** adicionar a propriedade de **domínio**, verificar pelo registro TXT no DNS do Cloudflare e enviar o `https://pizzariacabanas.com.br/sitemap.xml`. Pedir a indexação da página inicial.
 2. **Bing Webmaster Tools:** importar os dados do Search Console. O Bing alimenta o ChatGPT e o Copilot.
