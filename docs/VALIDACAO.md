@@ -47,7 +47,8 @@ Os avisos de cache e compressão vêm do servidor de teste local. No Cloudflare,
 - ✅ **Search Console:** propriedade de domínio `pizzariacabanas.com.br` verificada pelo registro TXT `google-site-verification=…` criado no DNS do Cloudflare. **Não apagar esse registro**, senão a verificação cai.
 - ✅ **Sitemap:** enviado. Logo após o envio aparece "Não foi possível buscar", o que é normal para domínio novo, e o Google tenta de novo sozinho.
 - ✅ **Página inicial:** indexação solicitada.
-- ⏳ **Pendentes:** Bing, Perfil da Empresa no Google e Web Analytics.
+- ✅ **Bing Webmaster Tools:** login com a conta Google da pizzaria e site importado do Search Console, que dá acesso só de leitura e dispensa nova verificação. O sitemap foi enviado à parte, porque a importação veio com 0 sitemaps, e está em processamento.
+- ⏳ **Pendentes:** Perfil da Empresa no Google (link do site) e conferir o Web Analytics no painel do Cloudflare.
 
 A verificação automática do Search Console via Cloudflare abre um pop-up de autorização. Se ele não abrir, use "Qualquer provedor de DNS" e crie o TXT manualmente no painel (DNS → Registros → Adicionar registro → TXT, nome `@`).
 
