@@ -165,7 +165,9 @@ ul,ol{padding:0;list-style:none}
 .tamanhos span{font-size:15px;color:var(--suave)}
 
 /* Avaliações */
-.aval-sub{margin:8px 0 28px;font-size:17px;color:var(--suave)}
+.aval-sub{margin:10px 0 16px;font-size:18px;line-height:1.55;max-width:760px;color:var(--texto);text-wrap:pretty}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.tags li{background:var(--papel);border:1px solid var(--borda);border-radius:999px;padding:7px 14px;font-size:15px;font-weight:600;color:var(--bordo)}
 .revs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
 .rev{background:var(--papel);border:1px solid var(--borda);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:18px}
 .rev::before{content:"\201C";font-family:var(--serif);font-size:48px;line-height:.6;color:var(--dourado);height:20px}
@@ -374,7 +376,16 @@ ul,ol{padding:0;list-style:none}
   <div class="wrap">
     <p class="rotulo">Avaliações</p>
     <h2 class="h2" id="h-aval">O que dizem no Google</h2>
-    <p class="aval-sub">Avaliações públicas de clientes no Google</p>
+    <!-- Frase e tags resumem o que os clientes dizem nas avaliações públicas do Google (não é afirmação da marca) -->
+    <p class="aval-sub">Para quem já pediu, a Cabanas é a melhor pizza de Campo Grande: ingredientes de qualidade, sabor marcante e atendimento de excelência, no Carandá Bosque e região.</p>
+    <ul class="tags" aria-label="O que os clientes mais destacam">
+      <li>Melhor pizza de Campo Grande</li>
+      <li>Ingredientes de qualidade</li>
+      <li>Sabor espetacular</li>
+      <li>Atendimento de excelência</li>
+      <li>Preparo rápido</li>
+      <li>Qualidade que não muda</li>
+    </ul>
     <div class="revs">
       <figure class="rev"><blockquote>Foi a melhor pizza que já comi! Sou de SP e estou de passagem em Campo Grande, resolvi experimentar e foi a melhor escolha… atendimento de excelência, rapidez no preparo e o sabor ESPETACULAR</blockquote><figcaption><strong>Carla Mikcel</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Ver no Google</a></figcaption></figure>
       <figure class="rev"><blockquote>Maravilhoso, melhor pizza de Campo Grande. Já faz 3 anos que eu aprecio a pizza da Cabanas e até hoje, rodando Campo Grande, poucas chegaram perto</blockquote><figcaption><strong>Juan Saab</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Ver no Google</a></figcaption></figure>
