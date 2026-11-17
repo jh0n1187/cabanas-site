@@ -1,0 +1,14 @@
+# Versão de publicação: gerada por `node tools/build.mjs` a partir de src/
+dist/
+
+# Dependências e temporários
+node_modules/
+.wrangler/
+*.log
+.env
+.env.*
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store

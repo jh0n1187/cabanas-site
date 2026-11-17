@@ -1,0 +1,5 @@
+# [CONFIRMAR: domínio]
+User-agent: *
+Allow: /
+
+Sitemap: https://pizzariacabanas.com.br/sitemap.xml

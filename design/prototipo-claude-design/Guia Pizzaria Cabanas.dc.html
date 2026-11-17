@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Pizzaria Cabanas · Pacote de implementação (v3)</title>
+<meta name="robots" content="noindex">
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#FCF8F1;color:#2A1715;font-family:'DM Sans',system-ui,sans-serif}a{color:#6F1418}a:hover{color:#4A0D10}</style>
+</helmet>
+<div style="width:1980px;padding:56px;box-sizing:border-box;display:flex;flex-direction:column;gap:64px">
+
+<header style="display:flex;align-items:center;gap:28px">
+  <img src="assets/logo-pizzaria-cabanas.png" alt="Logo Pizzaria Cabanas" width="120" height="120" style="border-radius:16px">
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <span style="align-self:flex-start;font:600 12px/1.4 ui-monospace,Menlo,monospace;background:#FFF3C4;color:#5A4300;border:1.5px dashed #B8900F;padding:5px 10px;border-radius:6px">RASCUNHO · não publicar sem aprovação</span>
+    <h1 style="margin:0;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:44px;color:#4A0D10">Pizzaria Cabanas · pacote de implementação (v3)</h1>
+    <p style="margin:0;font-size:17px;color:#5E4842"><a href="Pizzaria Cabanas v3.dc.html">Abrir o site v3</a> · <a href="sitemap.xml">sitemap.xml</a> · <a href="robots.txt">robots.txt</a> · <a href="assets/og-image-1200x630.jpg">og-image-1200x630.jpg</a></p>
+  </div>
+</header>
+
+<section style="display:flex;flex-direction:column;gap:20px">
+  <h2 style="margin:0;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;color:#4A0D10">1. Telas finais</h2>
+  <div style="display:flex;gap:40px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font:600 12px ui-monospace,monospace;color:#5E4842">CELULAR 375 × 667 · primeira dobra (iPhone SE)</span>
+      <iframe title="Celular 375x667" src="Pizzaria Cabanas v3.dc.html" style="width:375px;height:667px;border:0;outline:10px solid #2A1715;border-radius:4px;background:#FCF8F1"></iframe>
+      <span style="font-size:13px;color:#5E4842;max-width:375px">H1, status, os 2 botões e o horário cabem sem rolar. A barra fixa só aparece depois que os botões do hero saem da tela.</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font:600 12px ui-monospace,monospace;color:#5E4842">CELULAR 375 × 2400 · página rolável</span>
+      <iframe title="Celular página" src="Pizzaria Cabanas v3.dc.html" style="width:375px;height:1200px;border:1px solid #E5D6BE;background:#FCF8F1"></iframe>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font:600 12px ui-monospace,monospace;color:#5E4842">DESKTOP 1440 × 900</span>
+      <iframe title="Desktop 1440" src="Pizzaria Cabanas v3.dc.html" style="width:1440px;height:1200px;border:1px solid #E5D6BE;background:#FCF8F1"></iframe>
+    </div>
+  </div>
+  <h3 style="margin:16px 0 0;font-size:18px;font-weight:600">Estados especiais</h3>
+  <div style="display:flex;gap:40px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font:600 12px ui-monospace,monospace;color:#5E4842">AVISO MANUAL (feriado/folga)</span>
+      <iframe title="Feriado" src="Pizzaria Cabanas v3.dc.html?status=feriado" style="width:375px;height:667px;border:1px solid #E5D6BE;background:#FCF8F1"></iframe>
+      <span style="font-size:13px;color:#5E4842;max-width:375px">Variável <code>AVISO_FECHADO</code> no início do script: <code>{ ate: '2026-12-25', volta: 'sexta, 26/12' }</code>.</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font:600 12px ui-monospace,monospace;color:#5E4842">SEGUNDA (fechado)</span>
+      <iframe title="Segunda" src="Pizzaria Cabanas v3.dc.html?status=segunda" style="width:375px;height:667px;border:1px solid #E5D6BE;background:#FCF8F1"></iframe>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font:600 12px ui-monospace,monospace;color:#5E4842">SEM FOTOS E SEM DEPOIMENTOS (lançamento)</span>
+      <iframe title="Sem conteúdo" src="Pizzaria Cabanas v3.dc.html?vazio=1&amp;status=antes" style="width:1440px;height:1100px;border:1px solid #E5D6BE;background:#FCF8F1"></iframe>
+      <span style="font-size:13px;color:#5E4842">Hero fica só em bordô, cards viram blocos bordô com o nome do sabor, avaliações viram só "Veja as avaliações no Google".</span>
+    </div>
+  </div>
+</section>
+
+<section style="display:grid;grid-template-columns:1.2fr 1fr;gap:56px">
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <h2 style="margin:0;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;color:#4A0D10">2. Tokens · cores</h2>
+    <p style="margin:0;font-size:15px;color:#5E4842">Partem do logo: bordô #6F1418 e dourado #CD840D.</p>
+    <table style="border-collapse:collapse;font-size:15px">
+      <thead><tr style="text-align:left;border-bottom:2px solid #2A1715"><th style="padding:8px 12px 8px 0"></th><th style="padding:8px 12px">Token</th><th style="padding:8px 12px">HEX</th><th style="padding:8px 12px">Papel</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0"><span style="display:block;width:36px;height:24px;border-radius:4px;background:#6F1418"></span></td><td style="padding:8px 12px">brand/bordô</td><td style="padding:8px 12px"><code>#6F1418</code></td><td style="padding:8px 12px">Primária: cabeçalho, botão primário em fundo claro, rótulos</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0"><span style="display:block;width:36px;height:24px;border-radius:4px;background:#4A0D10"></span></td><td style="padding:8px 12px">bordô/escuro</td><td style="padding:8px 12px"><code>#4A0D10</code></td><td style="padding:8px 12px">Títulos, hover do primário, bloco Clube</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0"><span style="display:block;width:36px;height:24px;border-radius:4px;background:#2A0A0C"></span></td><td style="padding:8px 12px">vinho/noite</td><td style="padding:8px 12px"><code>#2A0A0C</code></td><td style="padding:8px 12px">Fundo do hero e rodapé, texto sobre dourado</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0"><span style="display:block;width:36px;height:24px;border-radius:4px;background:#CD840D"></span></td><td style="padding:8px 12px">brand/dourado</td><td style="padding:8px 12px"><code>#CD840D</code></td><td style="padding:8px 12px">Destaque: botões em fundo escuro, linhas decorativas, etiqueta</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0"><span style="display:block;width:36px;height:24px;border-radius:4px;background:#E8A93A"></span></td><td style="padding:8px 12px">dourado/claro</td><td style="padding:8px 12px"><code>#E8A93A</code></td><td style="padding:8px 12px">Texto dourado em fundo escuro, hover, anel de foco</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0"><span style="display:block;width:36px;height:24px;border-radius:4px;background:#FCF8F1;border:1px solid #E5D6BE"></span></td><td style="padding:8px 12px">fundo/papel</td><td style="padding:8px 12px"><code>#FCF8F1</code></td><td style="padding:8px 12px">Fundo principal, cards</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0"><span style="display:block;width:36px;height:24px;border-radius:4px;background:#F7F0E3;border:1px solid #E5D6BE"></span></td><td style="padding:8px 12px">fundo/creme</td><td style="padding:8px 12px"><code>#F7F0E3</code></td><td style="padding:8px 12px">Seções alternadas</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0"><span style="display:block;width:36px;height:24px;border-radius:4px;background:#2A1715"></span></td><td style="padding:8px 12px">texto</td><td style="padding:8px 12px"><code>#2A1715</code></td><td style="padding:8px 12px">Texto corrido</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0"><span style="display:block;width:36px;height:24px;border-radius:4px;background:#5E4842"></span></td><td style="padding:8px 12px">texto/suave</td><td style="padding:8px 12px"><code>#5E4842</code></td><td style="padding:8px 12px">Ingredientes, legendas</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0"><span style="display:block;width:36px;height:24px;border-radius:4px;background:#E9DCC6"></span></td><td style="padding:8px 12px">texto/sobre-escuro</td><td style="padding:8px 12px"><code>#E9DCC6</code></td><td style="padding:8px 12px">Texto de apoio em fundo bordô/vinho</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0"><span style="display:block;width:36px;height:24px;border-radius:4px;background:#E5D6BE"></span></td><td style="padding:8px 12px">borda</td><td style="padding:8px 12px"><code>#E5D6BE</code></td><td style="padding:8px 12px">Cards, pílulas, divisórias</td></tr>
+        <tr><td style="padding:8px 12px 8px 0"><span style="display:flex;gap:2px"><span style="width:11px;height:24px;background:#1E8E4E"></span><span style="width:11px;height:24px;background:#CD840D"></span><span style="width:11px;height:24px;background:#B3261E"></span></span></td><td style="padding:8px 12px">status</td><td style="padding:8px 12px"><code>#1E8E4E · #CD840D · #B3261E</code></td><td style="padding:8px 12px">Ponto de aberto / abre hoje / fechado (só o ponto; o texto é sempre escuro)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <h2 style="margin:0;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;color:#4A0D10">Contraste testado (WCAG 2.1)</h2>
+    <table style="border-collapse:collapse;font-size:15px">
+      <thead><tr style="text-align:left;border-bottom:2px solid #2A1715"><th style="padding:8px 12px 8px 0">Texto / fundo</th><th style="padding:8px 12px">Razão</th><th style="padding:8px 12px">AA</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0">#2A1715 / #F7F0E3</td><td style="padding:8px 12px">15,0:1</td><td style="padding:8px 12px">✓</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0">#6F1418 / #F7F0E3 (rótulos)</td><td style="padding:8px 12px">10,3:1</td><td style="padding:8px 12px">✓</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0">#5E4842 / #F7F0E3</td><td style="padding:8px 12px">7,4:1</td><td style="padding:8px 12px">✓</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0">#FCF8F1 / #6F1418 (botão primário)</td><td style="padding:8px 12px">10,6:1</td><td style="padding:8px 12px">✓</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0">#FCF8F1 / #2A0A0C (hero)</td><td style="padding:8px 12px">16,4:1</td><td style="padding:8px 12px">✓</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0">#2A0A0C / #CD840D (botão dourado)</td><td style="padding:8px 12px">6,0:1</td><td style="padding:8px 12px">✓</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0">#E8A93A / #6F1418 (rótulo em bordô)</td><td style="padding:8px 12px">5,7:1</td><td style="padding:8px 12px">✓</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0">#E9DCC6 / #6F1418</td><td style="padding:8px 12px">8,7:1</td><td style="padding:8px 12px">✓</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE;background:#FFF3C4"><td style="padding:8px 12px 8px 0">#CD840D / #F7F0E3 (dourado sobre creme)</td><td style="padding:8px 12px">2,7:1</td><td style="padding:8px 12px">✗ · só em linhas decorativas; texto do rótulo vai em bordô</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE;background:#FFF3C4"><td style="padding:8px 12px 8px 0">#CD840D / #6F1418</td><td style="padding:8px 12px">3,9:1</td><td style="padding:8px 12px">só UI (botão "Pedir" no cabeçalho ≥ 3:1); texto usa #E8A93A</td></tr>
+        <tr><td style="padding:8px 12px 8px 0">Texto sobre a foto do hero</td><td style="padding:8px 12px">≥ 7:1</td><td style="padding:8px 12px">✓ gradiente #2A0A0C a 90% ou mais em toda a área do texto, com qualquer foto</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section style="display:grid;grid-template-columns:1.2fr 1fr;gap:56px">
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <h2 style="margin:0;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;color:#4A0D10">Tipografia · 2 famílias, 3 arquivos</h2>
+    <p style="margin:0;font-size:15px;color:#5E4842"><strong style="font-weight:600;color:#2A1715">DM Serif Display 400</strong> (títulos, sabores, citações) + <strong style="font-weight:600;color:#2A1715">DM Sans 400 e 600</strong> (texto, botões, rótulos). Google Fonts com <code>display=swap</code>; em produção, hospedar os 3 WOFF2 no próprio domínio. Sem itálico nem negrito sintético.</p>
+    <table style="border-collapse:collapse;font-size:15px">
+      <thead><tr style="text-align:left;border-bottom:2px solid #2A1715"><th style="padding:8px 12px 8px 0">Estilo</th><th style="padding:8px 12px">Família / peso</th><th style="padding:8px 12px">Celular (375)</th><th style="padding:8px 12px">Desktop (1440)</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0;font-family:'DM Serif Display',serif;font-size:24px">H1</td><td style="padding:8px 12px">Serif 400</td><td style="padding:8px 12px">31 / 1,05</td><td style="padding:8px 12px">62 / 1,05</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0;font-family:'DM Serif Display',serif;font-size:20px">H2</td><td style="padding:8px 12px">Serif 400</td><td style="padding:8px 12px">28 / 1,1</td><td style="padding:8px 12px">44 / 1,1</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0;font-family:'DM Serif Display',serif;font-size:18px">H3 sabor / citação</td><td style="padding:8px 12px">Serif 400</td><td style="padding:8px 12px">24 · 20 / 1,4</td><td style="padding:8px 12px">24 · 20 / 1,4</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0;font-weight:600;letter-spacing:2.4px;font-size:13px;text-transform:uppercase">Rótulo</td><td style="padding:8px 12px">Sans 600, caixa alta, +2,4px</td><td style="padding:8px 12px">13</td><td style="padding:8px 12px">13</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0">Texto</td><td style="padding:8px 12px">Sans 400</td><td style="padding:8px 12px">16 / 1,6 (mín.)</td><td style="padding:8px 12px">17–18 / 1,6</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 12px 8px 0;font-weight:600">Botão</td><td style="padding:8px 12px">Sans 600</td><td style="padding:8px 12px">17</td><td style="padding:8px 12px">17</td></tr>
+        <tr><td style="padding:8px 12px 8px 0;font-size:14px">Legenda</td><td style="padding:8px 12px">Sans 400</td><td style="padding:8px 12px">14</td><td style="padding:8px 12px">14–15</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <h2 style="margin:0;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;color:#4A0D10">Espaço, raios, botões, breakpoints</h2>
+    <ul style="margin:0;padding-left:20px;font-size:15px;line-height:1.8">
+      <li><strong style="font-weight:600">Espaçamento:</strong> 4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96 px. Seções: 48 px no celular, até 96 px no desktop. Margem lateral 20 px.</li>
+      <li><strong style="font-weight:600">Raios:</strong> 6 px (etiquetas, foco) · 10 px (botões, cards, blocos) · 999 px (pílulas de status e bairros).</li>
+      <li><strong style="font-weight:600">Botões:</strong> primário 52 px (hero e barra), 56 px (Como pedir), cabeçalho e secundários 48 px; nunca abaixo de 48 px. Contorno do secundário: 2 px.</li>
+      <li><strong style="font-weight:600">Breakpoints:</strong> &lt; 600 celular · 600–899 tablet (layout de celular, grades com 2 colunas) · ≥ 900 desktop (menu no cabeçalho, hero dividido) · contêiner máx. 1200 px.</li>
+      <li><strong style="font-weight:600">Movimento:</strong> só transições de cor/hover em 150 ms e a barra do celular deslizando em 150 ms; tudo desligado com <code>prefers-reduced-motion</code>.</li>
+    </ul>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:16px">
+  <h2 style="margin:0;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;color:#4A0D10">3. Componentes e estados</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;font-size:15px;line-height:1.6">
+    <div style="border:1px solid #E5D6BE;border-radius:10px;padding:20px"><h3 style="margin:0 0 8px;font-size:17px;font-weight:600;color:#4A0D10">Cabeçalho fixo</h3>72 px, fundo #6F1418 (igual ao fundo do logo). Logo 124×56 · menu (≥ 900 px) · "Pedir". Links: normal #FCF8F1, hover #E8A93A. Sem menu hambúrguer.</div>
+    <div style="border:1px solid #E5D6BE;border-radius:10px;padding:20px"><h3 style="margin:0 0 8px;font-size:17px;font-weight:600;color:#4A0D10">Hero + status</h3>Pílula clara com ponto colorido: Aberto agora · até 22h45 / Abre hoje às 18h / Fechado hoje · abre terça às 18h / Hoje estamos fechados · voltamos [dia]. Calculado no fuso America/Campo_Grande, atualizado a cada minuto; horário fixo em texto abaixo dos botões.</div>
+    <div style="border:1px solid #E5D6BE;border-radius:10px;padding:20px"><h3 style="margin:0 0 8px;font-size:17px;font-weight:600;color:#4A0D10">Botões</h3><strong style="font-weight:600">Primário:</strong> #CD840D/#2A0A0C em fundo escuro, #6F1418/#FCF8F1 em fundo claro. Hover: #E8A93A ou #4A0D10. <strong style="font-weight:600">Secundário:</strong> contorno 2 px; hover preenche. <strong style="font-weight:600">Foco:</strong> anel 3 px #E8A93A + halo 6 px #2A0A0C (visível em fundo claro e escuro). <strong style="font-weight:600">Desabilitado:</strong> não usado (todos levam a links externos); se necessário, 40% de opacidade e <code>aria-disabled</code>.</div>
+    <div style="border:1px solid #E5D6BE;border-radius:10px;padding:20px"><h3 style="margin:0 0 8px;font-size:17px;font-weight:600;color:#4A0D10">Card de sabor</h3>Foto 4:3 + nome (Serif 24) + ingredientes + "Ver no cardápio →". O card inteiro é um link. Sem foto: bloco bordô com o nome em destaque e etiqueta [FOTO REAL]. Etiqueta dourada opcional ("Sabor da casa · regional"). Hover: nome em #6F1418.</div>
+    <div style="border:1px solid #E5D6BE;border-radius:10px;padding:20px"><h3 style="margin:0 0 8px;font-size:17px;font-weight:600;color:#4A0D10">Depoimento</h3>Aspas douradas decorativas, trecho em Serif 20, nome + "Ver no Google". Sem estrelas. Sem depoimentos: a seção mostra só título, uma frase e os botões.</div>
+    <div style="border:1px solid #E5D6BE;border-radius:10px;padding:20px"><h3 style="margin:0 0 8px;font-size:17px;font-weight:600;color:#4A0D10">Bloco de hotéis e hospital</h3>Secundário: só contorno, texto 15 px, lista em texto (hospital primeiro, em negrito), botões de 48 px. Sem logos, sem links para os locais.</div>
+    <div style="border:1px solid #E5D6BE;border-radius:10px;padding:20px"><h3 style="margin:0 0 8px;font-size:17px;font-weight:600;color:#4A0D10">Item do FAQ</h3><code>&lt;details&gt;/&lt;summary&gt;</code> nativo, 56 px de altura mínima, "+" gira 45° quando aberto. Teclado: Enter/Espaço. Todas as respostas ficam no HTML (e no JSON-LD).</div>
+    <div style="border:1px solid #E5D6BE;border-radius:10px;padding:20px"><h3 style="margin:0 0 8px;font-size:17px;font-weight:600;color:#4A0D10">Barra fixa (celular)</h3>"Ver cardápio e pedir" + "WhatsApp", 52 px. Aparece quando os botões do hero saem da tela; some quando eles voltam. Respiro de 88 px + área segura no fim da página: não cobre o rodapé.</div>
+    <div style="border:1px solid #E5D6BE;border-radius:10px;padding:20px"><h3 style="margin:0 0 8px;font-size:17px;font-weight:600;color:#4A0D10">Rastreamento</h3><code>data-track</code> = cardapio · whatsapp · telefone · ifood · avaliar. Links do MenuDino com <code>utm_source=site&amp;utm_medium=</code> header · hero · cardapio · hoteis · rodape · barra-mobile. <span style="background:#FFF3C4;color:#5A4300;padding:1px 5px;border-radius:4px;font-size:13px">[CONFIRMAR se o MenuDino aceita UTM]</span></div>
+  </div>
+</section>
+
+<section style="display:grid;grid-template-columns:1.3fr 1fr;gap:56px">
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <h2 style="margin:0;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;color:#4A0D10">4. Lista de fotos</h2>
+    <p style="margin:0;font-size:15px;color:#5E4842">Padrão de luz: quente e lateral, vista de cima, forma de cobre, fundo colorido liso ou toalha xadrez. Nunca mesas, cadeiras ou salão. Exportar em AVIF + WebP.</p>
+    <table style="border-collapse:collapse;font-size:14px;line-height:1.5">
+      <thead><tr style="text-align:left;border-bottom:2px solid #2A1715"><th style="padding:8px 10px 8px 0">Foto</th><th style="padding:8px 10px">Uso</th><th style="padding:8px 10px">Proporção · mín.</th><th style="padding:8px 10px">Enquadramento</th><th style="padding:8px 10px">Status</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 10px 8px 0">Hero desktop</td><td style="padding:8px 10px">Metade direita do hero</td><td style="padding:8px 10px">16:9 · 2400×1350</td><td style="padding:8px 10px">Pizza inteira de cima, centro a 70% da largura e 50% da altura; terço esquerdo com fundo liso (fica atrás do gradiente)</td><td style="padding:8px 10px">Provisória: Cabanas Gourmet 4:5</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 10px 8px 0">Hero celular</td><td style="padding:8px 10px">Fundo do hero</td><td style="padding:8px 10px">4:5 · 1080×1350</td><td style="padding:8px 10px">Pizza no terço superior (centro a 50%/25%); metade de baixo pode ficar coberta pelo texto</td><td style="padding:8px 10px">Cabanas Gourmet, caixa recortada ✓</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 10px 8px 0">Cards de sabor (×6)</td><td style="padding:8px 10px">Cardápio</td><td style="padding:8px 10px">4:3 · 1200×900</td><td style="padding:8px 10px">Close de cima ou 45°, ingredientes nítidos, sem caixa nem marca d'água</td><td style="padding:8px 10px">Gourmet e Doces ✓ · faltam Pantaneira, Campo Grande, Filé de Angus, Clássicas</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 10px 8px 0">Sobre</td><td style="padding:8px 10px">Sobre a Cabanas</td><td style="padding:8px 10px">3:2 · 1500×1000</td><td style="padding:8px 10px">Pizza ou fatia puxando o queijo, luz por trás</td><td style="padding:8px 10px">Brie com Geleia de Pimenta (provisória)</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 10px 8px 0">Recepção</td><td style="padding:8px 10px">Retire no balcão</td><td style="padding:8px 10px">16:9 · 1600×900</td><td style="padding:8px 10px">Balcão com o logo na parede e cozinha ao fundo, sem mesas</td><td style="padding:8px 10px">Falta</td></tr>
+        <tr style="border-bottom:1px solid #E5D6BE"><td style="padding:8px 10px 8px 0">Caixa de entrega</td><td style="padding:8px 10px">Reserva (Como pedir / redes)</td><td style="padding:8px 10px">4:5 · 1080×1350</td><td style="padding:8px 10px">Caixa atual aberta com pizza; sem @ antigo</td><td style="padding:8px 10px">Falta</td></tr>
+        <tr><td style="padding:8px 10px 8px 0">Compartilhamento</td><td style="padding:8px 10px">Open Graph / WhatsApp</td><td style="padding:8px 10px">1200×630</td><td style="padding:8px 10px">Logo à esquerda, pizza à direita</td><td style="padding:8px 10px">Gerada ✓ (refazer com foto final)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <h2 style="margin:0;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;color:#4A0D10">5. Ícones</h2>
+    <p style="margin:0;font-size:15px;line-height:1.6">A proposta usa só formas simples (losango dourado nos diferenciais, ponto de status). Para o código final, SVG de linha 24 px, traço 1,75 px, cor <code>currentColor</code>:</p>
+    <ul style="margin:0;padding-left:20px;font-size:15px;line-height:1.8">
+      <li>Diferenciais (Lucide, licença ISC): <code>wheat</code> fermentação longa · <code>map-pin</code> 5 anos no bairro · <code>circle-half</code> meio a meio · <code>bike</code>/<code>store</code> delivery ou retirada</li>
+      <li>Marcas (Simple Icons, SVG oficial): WhatsApp · Instagram · Facebook</li>
+      <li>Telefone: Lucide <code>phone</code></li>
+      <li>Sempre com texto ao lado ou <code>aria-label</code>; ícone decorativo com <code>aria-hidden="true"</code>.</li>
+    </ul>
+    <h2 style="margin:24px 0 0;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;color:#4A0D10">6. HTML/CSS de referência</h2>
+    <p style="margin:0;font-size:15px;line-height:1.6">O arquivo do site v3 serve de referência: HTML semântico, JSON-LD Restaurant (com <code>areaServed</code> GeoCircle de 10 km e <code>OrderAction</code>) e FAQPage com as 10 perguntas, script de status com <code>AVISO_FECHADO</code>, mapa sob demanda, <code>sitemap.xml</code> e <code>robots.txt</code> com https://pizzariacabanas.com.br/.</p>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:14px;background:#FFF3C4;border:1.5px dashed #B8900F;border-radius:10px;padding:28px">
+  <h2 style="margin:0;font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:32px;color:#5A4300">Checklist para publicar</h2>
+  <ul style="margin:0;padding-left:4px;list-style:none;font-size:16px;line-height:1.9;color:#3B2A00">
+    <li>☐ Fotos reais: hero 16:9 e 4:5, Pantaneira, Campo Grande, Filé de Angus Premium, Clássicas, recepção, caixa de entrega</li>
+    <li>☐ Logo em alta (SVG ou PNG transparente) e versão reduzida para favicon</li>
+    <li>☐ Domínio definitivo (hoje: pizzariacabanas.com.br [CONFIRMAR])</li>
+    <li>☑ Primeira tela no celular 375×667 com H1, status e os 2 botões sem rolar (ver tela acima)</li>
+    <li>☐ Confirmar tamanhos (Média 1 sabor/6 pedaços, Grande até 2 sabores/8 pedaços)</li>
+    <li>☐ Confirmar "Brie com Geleia de Pimenta" no cardápio (foto do "Sobre")</li>
+    <li>☐ Confirmar se o dono quer o mascote (marcado no bloco Clube Cabanas)</li>
+    <li>☐ Confirmar se o MenuDino aceita parâmetros UTM</li>
+  </ul>
+  <p style="margin:0;font-size:14px;color:#5A4300">A nota do Google saiu do hero a pedido; continuam os links "Ver todas as avaliações" e "Avaliar a Cabanas".</p>
+</section>
+
+</div>
+</x-dc>
+</body>
+</html>
