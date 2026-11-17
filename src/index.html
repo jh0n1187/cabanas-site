@@ -626,7 +626,7 @@ ul,ol{padding:0;list-style:none}
   var revs = document.getElementById('revs');
   if (revs && revs.children.length > 1) {
     var VELOCIDADE = 32;          // px por segundo
-    var RETOMA_MS = 2500;         // volta a rodar sozinho depois de soltar
+    var RETOMA_MS = 1500;         // volta a rodar sozinho depois de soltar
     var originais = Array.prototype.slice.call(revs.children);
     var copia = function () {
       var f = document.createDocumentFragment();
@@ -666,14 +666,12 @@ ul,ol{padding:0;list-style:none}
     };
     requestAnimationFrame(quadro);
 
-    // Toque (celular): o próprio navegador rola; só pausamos e retomamos
+    // Pausa só enquanto a pessoa arrasta; ao soltar, volta a girar sozinho.
+    // (Não pausar por hover/foco: o clique no link do card deixava o foco preso e o carrossel parado.)
     revs.addEventListener('touchstart', pausa, { passive: true });
     revs.addEventListener('touchend', retoma, { passive: true });
+    revs.addEventListener('touchcancel', retoma, { passive: true });
     revs.addEventListener('wheel', function () { pausa(); retoma(); }, { passive: true });
-    revs.addEventListener('mouseenter', pausa);
-    revs.addEventListener('mouseleave', retoma);
-    revs.addEventListener('focusin', pausa);
-    revs.addEventListener('focusout', retoma);
 
     // Arrastar com o mouse (desktop)
     var arrasto = null, moveu = false;
@@ -688,10 +686,14 @@ ul,ol{padding:0;list-style:none}
       if (Math.abs(dx) > 5) moveu = true;
       revs.scrollLeft = arrasto.s - dx;
     });
-    window.addEventListener('pointerup', function () {
+    var solta = function () {
       if (!arrasto) return;
       arrasto = null; revs.classList.remove('arrastando');
-    });
+      if (document.activeElement && revs.contains(document.activeElement)) document.activeElement.blur();
+      retoma();
+    };
+    window.addEventListener('pointerup', solta);
+    window.addEventListener('pointercancel', solta);
     // Depois de arrastar, não abre o link "Google/iFood" sem querer
     revs.addEventListener('click', function (e) { if (moveu) { e.preventDefault(); moveu = false; } }, true);
 
