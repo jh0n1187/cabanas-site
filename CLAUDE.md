@@ -18,6 +18,14 @@ Site one-page estático (HTML + CSS + JS puro, sem framework) para SEO local de 
 3. `node tools/build.mjs`, conferir o `dist/` (configuração `site-dist`, porta 8091) e seguir `docs/VALIDACAO.md`.
 4. Deploy: `npx wrangler@4 deploy`. O login é por `npx wrangler@4 login` (OAuth no navegador); nunca peça token no chat.
 
+## Regra nº 1: conversão primeiro
+O site existe para gerar **pedido**: clique em "Ver cardápio e pedir", no WhatsApp ou na ligação. **Antes de aplicar qualquer mudança pedida, avalie e diga o impacto na conversão** (neutro, positivo ou risco, e como mitigar). Se houver risco, proponha alternativa e pergunte.
+Pontos a checar:
+- Botões de pedido visíveis e nada cobrindo (primeira tela e barra fixa no celular).
+- Nada desviando o caminho até o cardápio.
+- LCP < 2,5 s.
+- Nada que gere dúvida no cliente sobre preço, prazo ou operação.
+
 ## Regras de conteúdo (detalhes em docs/prompt-site-pizzaria-cabanas.md)
 - **Nome e endereço:** sempre "Pizzaria Cabanas", Av. Antônio Teodorowich, 119 – Carandá Bosque, iguais ao Google Maps.
 - **Operação:** só delivery e retirada no balcão. Sem salão, mesas ou churrascaria. Nunca usar o endereço antigo.
