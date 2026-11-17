@@ -1,0 +1,21 @@
+// Publicação no Cloudflare Workers (arquivos estáticos de dist/).
+// Deploy: node tools/build.mjs && npx wrangler@4 deploy
+{
+  "name": "pizzaria-cabanas",
+  "compatibility_date": "2026-11-17",
+  "main": "worker/index.js",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    // o script roda antes dos arquivos para redirecionar www -> domínio principal
+    "run_worker_first": true
+  },
+  "workers_dev": false,
+  "preview_urls": false,
+  // domínio próprio: o Cloudflare cria o DNS e o certificado automaticamente
+  "routes": [
+    { "pattern": "pizzariacabanas.com.br", "custom_domain": true },
+    { "pattern": "www.pizzariacabanas.com.br", "custom_domain": true }
+  ]
+}
