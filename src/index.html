@@ -168,14 +168,11 @@ ul,ol{padding:0;list-style:none}
 .aval-sub{margin:10px 0 16px;font-size:18px;line-height:1.55;max-width:760px;color:var(--texto);text-wrap:pretty}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
 .tags li{background:var(--papel);border:1px solid var(--borda);border-radius:999px;padding:7px 14px;font-size:15px;font-weight:600;color:var(--bordo)}
-/* Carrossel: rolagem horizontal com encaixe (scroll-snap); 1 card + pedaço do próximo no celular, 3 no desktop */
-.revs{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:2px 2px 6px;margin:0 -2px;overscroll-behavior-x:contain}
+/* Carrossel: rolagem automática contínua e infinita (controlada no script); arrastar com dedo ou mouse */
+.revs{display:flex;gap:16px;overflow-x:auto;scroll-behavior:auto;scrollbar-width:none;padding:2px 2px 6px;margin:0 -2px;overscroll-behavior-x:contain;cursor:grab;-webkit-user-select:none;user-select:none}
 .revs::-webkit-scrollbar{display:none}
-.rev{flex:0 0 min(86%,360px);scroll-snap-align:start;background:var(--papel);border:1px solid var(--borda);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:18px}
-.carrossel__nav{display:flex;gap:8px;margin-top:14px}
-.carrossel__btn{width:48px;height:48px;border-radius:50%;border:2px solid var(--bordo);background:var(--papel);color:var(--bordo);font-size:20px;cursor:pointer;transition:background-color .15s,color .15s}
-.carrossel__btn:hover{background:var(--bordo);color:var(--papel)}
-.carrossel__btn:disabled{opacity:.35;cursor:default;background:var(--papel);color:var(--bordo)}
+.revs.arrastando{cursor:grabbing}
+.rev{flex:0 0 min(86%,360px);background:var(--papel);border:1px solid var(--borda);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:18px}
 @media (min-width:900px){.rev{flex-basis:calc((100% - 32px)/3)}}
 .rev::before{content:"\201C";font-family:var(--serif);font-size:48px;line-height:.6;color:var(--dourado);height:20px}
 .rev blockquote{font-family:var(--serif);font-size:20px;line-height:1.4;text-wrap:pretty}
@@ -393,7 +390,8 @@ ul,ol{padding:0;list-style:none}
       <li>Preparo rápido</li>
       <li>Qualidade que não muda</li>
     </ul>
-    <!-- Carrossel manual (sem rolagem automática): arrastar no celular ou usar as setas.
+    <!-- Carrossel automático, suave e infinito (o último emenda no primeiro). Arrastar pausa e volta a rodar sozinho.
+         As cópias para o efeito infinito são criadas pelo script (não ficam no HTML, então o Google lê cada depoimento uma vez).
          Depoimentos reais e públicos do Google e do iFood (coletados em 17/11/2026); só a pontuação foi ajustada. -->
     <div class="carrossel" role="region" aria-roledescription="carrossel" aria-label="Depoimentos de clientes">
       <div class="revs" id="revs" tabindex="0">
@@ -408,10 +406,6 @@ ul,ol{padding:0;list-style:none}
         <figure class="rev"><blockquote>Praticidade no pedido, a pizza ficou pronta rápido, atendimento cortês, preço justo e o principal: a pizza estava uma delícia.</blockquote><figcaption><strong>Stanley Centurion</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
         <figure class="rev"><blockquote>Cliente há anos. Uma das melhores pizzas de Campo Grande, produto de qualidade e preço justo.</blockquote><figcaption><strong>Luiz Bonelli</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
         <figure class="rev"><blockquote>Melhor pizzaria de CG.</blockquote><figcaption><strong>Luciana</strong><a href="https://www.ifood.com.br/delivery/campo-grande-ms/pizzaria-cabanas-caranda-bosque/bbf4cc48-bc25-472c-88c7-6c3fb110c2bf" target="_blank" rel="noopener">iFood</a></figcaption></figure>
-      </div>
-      <div class="carrossel__nav">
-        <button type="button" class="carrossel__btn" data-dir="-1" aria-controls="revs" aria-label="Depoimentos anteriores">←</button>
-        <button type="button" class="carrossel__btn" data-dir="1" aria-controls="revs" aria-label="Próximos depoimentos">→</button>
       </div>
     </div>
     <div class="acoes">
@@ -626,21 +620,85 @@ ul,ol{padding:0;list-style:none}
   function atualiza() { var s = status(); txt.textContent = s[0]; ponto.style.background = s[1]; }
   try { atualiza(); setInterval(atualiza, 60000); } catch (e) { /* mantém o horário estático */ }
 
-  // Carrossel de depoimentos: setas avançam um card; desabilitam no início/fim. Sem rolagem automática.
+  // Carrossel de depoimentos: rolagem automática contínua e infinita.
+  // Estrutura: [cópia][originais][cópia]. Quando a posição sai do bloco do meio, volta um bloco inteiro
+  // (o usuário não percebe porque o conteúdo é idêntico) -> o último emenda no primeiro nos dois sentidos.
   var revs = document.getElementById('revs');
-  if (revs) {
-    var btns = document.querySelectorAll('.carrossel__btn');
-    var passo = function () { var c = revs.querySelector('.rev'); return c ? c.getBoundingClientRect().width + 16 : revs.clientWidth; };
-    var estado = function () {
-      btns[0].disabled = revs.scrollLeft <= 2;
-      btns[1].disabled = revs.scrollLeft + revs.clientWidth >= revs.scrollWidth - 2;
+  if (revs && revs.children.length > 1) {
+    var VELOCIDADE = 32;          // px por segundo
+    var RETOMA_MS = 2500;         // volta a rodar sozinho depois de soltar
+    var originais = Array.prototype.slice.call(revs.children);
+    var copia = function () {
+      var f = document.createDocumentFragment();
+      originais.forEach(function (el) {
+        var c = el.cloneNode(true);
+        c.setAttribute('aria-hidden', 'true');
+        c.querySelectorAll('a').forEach(function (a) { a.setAttribute('tabindex', '-1'); });
+        f.appendChild(c);
+      });
+      return f;
     };
-    btns.forEach(function (b) {
-      b.addEventListener('click', function () { revs.scrollBy({ left: passo() * +b.dataset.dir }); });
+    revs.insertBefore(copia(), revs.firstChild);
+    revs.appendChild(copia());
+
+    var bloco = 0, pos = 0, ultimo = 0, pausado = false, visivel = true, timer = null;
+    var mede = function () { bloco = originais[0].offsetLeft - revs.firstElementChild.offsetLeft; };
+    var normaliza = function (x) { if (x < bloco) x += bloco; if (x >= bloco * 2) x -= bloco; return x; };
+    mede();
+    pos = bloco; revs.scrollLeft = pos;
+
+    // Quem ativou "reduzir movimento" no sistema: continua rodando, mas na metade da velocidade
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) VELOCIDADE = VELOCIDADE / 2;
+    var pausa = function () { pausado = true; clearTimeout(timer); };
+    var retoma = function () { clearTimeout(timer); timer = setTimeout(function () { pos = revs.scrollLeft; pausado = false; }, RETOMA_MS); };
+
+    var quadro = function (t) {
+      var dt = ultimo ? Math.min((t - ultimo) / 1000, 0.1) : 0;
+      ultimo = t;
+      if (!pausado && visivel && !document.hidden) {
+        pos = normaliza(pos + VELOCIDADE * dt);
+        revs.scrollLeft = pos;
+      } else if (pausado) {
+        var n = normaliza(revs.scrollLeft);           // mantém infinito também enquanto o usuário arrasta
+        if (Math.abs(n - revs.scrollLeft) > 1) revs.scrollLeft = n;
+      }
+      requestAnimationFrame(quadro);
+    };
+    requestAnimationFrame(quadro);
+
+    // Toque (celular): o próprio navegador rola; só pausamos e retomamos
+    revs.addEventListener('touchstart', pausa, { passive: true });
+    revs.addEventListener('touchend', retoma, { passive: true });
+    revs.addEventListener('wheel', function () { pausa(); retoma(); }, { passive: true });
+    revs.addEventListener('mouseenter', pausa);
+    revs.addEventListener('mouseleave', retoma);
+    revs.addEventListener('focusin', pausa);
+    revs.addEventListener('focusout', retoma);
+
+    // Arrastar com o mouse (desktop)
+    var arrasto = null, moveu = false;
+    revs.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      arrasto = { x: e.clientX, s: revs.scrollLeft }; moveu = false;
+      revs.classList.add('arrastando'); pausa();
     });
-    revs.addEventListener('scroll', estado, { passive: true });
-    window.addEventListener('resize', estado);
-    estado();
+    window.addEventListener('pointermove', function (e) {
+      if (!arrasto) return;
+      var dx = e.clientX - arrasto.x;
+      if (Math.abs(dx) > 5) moveu = true;
+      revs.scrollLeft = arrasto.s - dx;
+    });
+    window.addEventListener('pointerup', function () {
+      if (!arrasto) return;
+      arrasto = null; revs.classList.remove('arrastando');
+    });
+    // Depois de arrastar, não abre o link "Google/iFood" sem querer
+    revs.addEventListener('click', function (e) { if (moveu) { e.preventDefault(); moveu = false; } }, true);
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) { visivel = e[0].isIntersecting; }).observe(revs);
+    }
+    window.addEventListener('resize', function () { var r = (revs.scrollLeft - bloco) / (bloco || 1); mede(); pos = bloco + r * bloco; });
   }
 
   // Barra fixa do celular: só aparece quando os botões do hero saem da tela
