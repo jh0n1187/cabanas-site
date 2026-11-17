@@ -267,6 +267,12 @@ ul,ol{padding:0;list-style:none}
 .barra .btn--bordo{flex:1;font-size:17px}
 .barra .btn--linha{flex:none;min-width:104px;font-size:15px}
 
+/* Voltar ao topo: aparece depois que o hero sai da tela; no celular fica acima da barra fixa */
+.topo-btn{position:fixed;right:16px;bottom:calc(88px + env(safe-area-inset-bottom) + 12px);z-index:55;width:48px;height:48px;border-radius:50%;background:var(--bordo);color:var(--papel);border:2px solid var(--papel);display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 14px rgba(42,10,12,.3);transition:opacity .2s,transform .2s,background-color .15s}
+.topo-btn:hover{background:var(--bordo-esc);color:var(--papel)}
+.topo-btn svg{width:22px;height:22px}
+.topo-btn.oculto{opacity:0;transform:translateY(12px);pointer-events:none}
+
 @media (min-width:900px){
   .topo nav{display:flex}
   .hero__foto{left:auto;width:min(52%,880px)}
@@ -275,6 +281,7 @@ ul,ol{padding:0;list-style:none}
   .hero__in{justify-content:center}
   .hero__txt{max-width:min(560px,calc(48vw - 60px))}
   .barra,.barra-esp{display:none}
+  .topo-btn{right:24px;bottom:24px}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
@@ -583,6 +590,8 @@ ul,ol{padding:0;list-style:none}
   <p class="copy">© Pizzaria Cabanas · Campo Grande–MS</p>
 </footer>
 
+<a class="topo-btn" id="topo-btn" href="#topo" aria-label="Voltar para o topo" title="Voltar para o topo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
 <div class="barra-esp" aria-hidden="true"></div>
 <div class="barra" id="barra">
   <a class="btn btn--bordo" href="https://cabanaspizzas.menudino.com/?utm_source=site&amp;utm_medium=barra-mobile" data-track="cardapio" target="_blank" rel="noopener">Ver cardápio e pedir</a>
@@ -713,6 +722,20 @@ ul,ol{padding:0;list-style:none}
       barra.classList.toggle('oculta', some);
       barra.querySelectorAll('a').forEach(function (a) { some ? a.setAttribute('tabindex', '-1') : a.removeAttribute('tabindex'); });
     }).observe(cta);
+  }
+
+  // Voltar ao topo: some enquanto o hero está visível; o clique sobe até o início da página (com o cabeçalho)
+  var topoBtn = document.getElementById('topo-btn'), hero = document.querySelector('.hero');
+  if (topoBtn) {
+    topoBtn.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0 }); topoBtn.blur(); });
+    if ('IntersectionObserver' in window && hero) {
+      topoBtn.classList.add('oculto');
+      new IntersectionObserver(function (e) {
+        var some = e[0].isIntersecting;
+        topoBtn.classList.toggle('oculto', some);
+        some ? topoBtn.setAttribute('tabindex', '-1') : topoBtn.removeAttribute('tabindex');
+      }).observe(hero);
+    }
   }
 })();
 </script>
