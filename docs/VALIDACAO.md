@@ -42,6 +42,15 @@ Os avisos de cache e compressão vêm do servidor de teste local. No Cloudflare,
 - **API do PageSpeed sem chave:** estoura a cota diária. Use o site pagespeed.web.dev ou o Lighthouse local contra a URL.
 
 ## 3. Indexação (uma vez, depois que o domínio estiver ativo)
+
+**Situação em 17/11/2026:**
+- ✅ **Search Console:** propriedade de domínio `pizzariacabanas.com.br` verificada pelo registro TXT `google-site-verification=…` criado no DNS do Cloudflare. **Não apagar esse registro**, senão a verificação cai.
+- ✅ **Sitemap:** enviado. Logo após o envio aparece "Não foi possível buscar", o que é normal para domínio novo, e o Google tenta de novo sozinho.
+- ✅ **Página inicial:** indexação solicitada.
+- ⏳ **Pendentes:** Bing, Perfil da Empresa no Google e Web Analytics.
+
+A verificação automática do Search Console via Cloudflare abre um pop-up de autorização. Se ele não abrir, use "Qualquer provedor de DNS" e crie o TXT manualmente no painel (DNS → Registros → Adicionar registro → TXT, nome `@`).
+
 1. **Google Search Console:** adicionar a propriedade de **domínio**, verificar pelo registro TXT no DNS do Cloudflare e enviar o `https://pizzariacabanas.com.br/sitemap.xml`. Pedir a indexação da página inicial.
 2. **Bing Webmaster Tools:** importar os dados do Search Console. O Bing alimenta o ChatGPT e o Copilot.
 3. **Perfil da Empresa no Google:** trocar o site para `https://pizzariacabanas.com.br/?utm_source=gbp`.
