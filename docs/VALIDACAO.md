@@ -49,10 +49,13 @@ Os avisos de cache e compressão vêm do servidor de teste local. No Cloudflare,
 - ✅ **Página inicial:** indexação solicitada.
 - ✅ **Bing Webmaster Tools:** login com a conta Google da pizzaria e site importado do Search Console, que dá acesso só de leitura e dispensa nova verificação. O sitemap foi enviado à parte, porque a importação veio com 0 sitemaps, e está em processamento.
 - ✅ **Perfil da Empresa no Google:** o campo "Site" passou de `cabanaspizzas.menudino.com` para `https://pizzariacabanas.com.br/?utm_source=gbp`, em revisão pelo Google (cerca de 10 min). O "Link do cardápio" continua no MenuDino, de propósito.
-- ⏳ **Pendentes:**
-  - Conferir o Web Analytics no painel do Cloudflare.
-  - Ajustar a descrição do perfil, que diz "exclusivamente com delivery" mas a loja também tem retirada no balcão.
-  - Rever a categoria secundária "Restaurante" (aguarda o ok do dono).
+- ✅ **Descrição do Perfil da Empresa:** trocada para mencionar "delivery e retirada no balcão", mais de 5 anos, horário e bairro. Está em revisão pelo Google.
+  - As regras do perfil **não permitem URL na descrição**, então o texto termina com "Peça pelo nosso cardápio online ou pelo WhatsApp".
+- ✅ **Atributos (Opções de serviço):**
+  - O Google tinha trocado sozinho para "Serve refeição no local". Reafirmamos o valor do dono e salvamos: entrega **Sim**, comida para viagem **Sim**, refeição no local **Não**, drive-through **Não**.
+  - **Revisar de tempos em tempos:** o Google altera atributos com base em sugestões de usuários.
+- **Categoria "Restaurante":** mantida por decisão do dono.
+- ⏳ **Pendente:** conferir o Web Analytics no painel do Cloudflare.
 
 A verificação automática do Search Console via Cloudflare abre um pop-up de autorização. Se ele não abrir, use "Qualquer provedor de DNS" e crie o TXT manualmente no painel (DNS → Registros → Adicionar registro → TXT, nome `@`).
 
