@@ -196,8 +196,10 @@ ul,ol{padding:0;list-style:none}
 
 /* Como pedir */
 .passos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px;margin-top:32px}
-.passos li{border-top:2px solid var(--dourado);padding-top:18px;display:flex;flex-direction:column;gap:8px;font-size:19px;font-weight:600}
-.passos li span{font-family:var(--serif);font-weight:400;font-size:40px;line-height:1;color:var(--dourado-cl)}
+.passos li{border-top:2px solid var(--dourado);padding-top:18px;display:grid;grid-template-columns:max-content 1fr;align-content:start;gap:8px 12px}
+.passo__icone{grid-column:2;grid-row:1;align-self:center;width:22px;height:22px;color:var(--dourado-cl)}
+.passo__numero{grid-column:1;grid-row:1;font-family:var(--serif);font-weight:400;font-size:40px;line-height:1;color:var(--dourado-cl)}
+.passos p{grid-column:1/-1;grid-row:2;font-size:19px;font-weight:600;line-height:1.5}
 .sec--bordo .acoes{margin-top:36px}
 .ifood{margin-top:18px;font-size:15px;color:var(--sobre-esc)}
 .ifood a{color:var(--papel)}
@@ -244,8 +246,9 @@ ul,ol{padding:0;list-style:none}
 .faq details{border-bottom:1px solid var(--borda-faq)}
 .faq summary{list-style:none;cursor:pointer;min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:17px;font-weight:600;padding:8px 0}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";color:var(--bordo);font-size:24px;font-weight:400;line-height:1;transition:transform .15s;flex:none}
+.faq summary::after{content:"+";color:var(--bordo);font-size:24px;font-weight:400;line-height:1;transition:transform .28s;flex:none}
 .faq details[open] summary::after{transform:rotate(45deg)}
+.faq details.faq--fechando summary::after{transform:rotate(0)}
 .faq details p{margin:0 0 18px;font-size:16px;line-height:1.6;max-width:680px}
 
 /* Rodapé */
@@ -467,9 +470,21 @@ ul,ol{padding:0;list-style:none}
     <p class="rotulo">Como pedir</p>
     <h2 class="h2" id="h-como">Pizza delivery em 3 passos</h2>
     <ol class="passos">
-      <li><span aria-hidden="true">1</span>Acesse o cardápio.</li>
-      <li><span aria-hidden="true">2</span>Escolha sua pizza e informe o endereço.</li>
-      <li><span aria-hidden="true">3</span>Confira taxa e prazo e finalize o pedido.</li>
+      <li>
+        <svg class="passo__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M9 7h6M9 11h6M11 18h2"/></svg>
+        <span class="passo__numero" aria-hidden="true">1</span>
+        <p>Acesse o cardápio.</p>
+      </li>
+      <li>
+        <svg class="passo__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-7 8-13a8 8 0 0 0-16 0c0 6 8 13 8 13Z"/><circle cx="12" cy="9" r="3"/></svg>
+        <span class="passo__numero" aria-hidden="true">2</span>
+        <p>Escolha sua pizza e informe o endereço.</p>
+      </li>
+      <li>
+        <svg class="passo__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="m7 12 3 3 7-7"/></svg>
+        <span class="passo__numero" aria-hidden="true">3</span>
+        <p>Confira taxa e prazo e finalize o pedido.</p>
+      </li>
     </ol>
     <div class="acoes">
       <a class="btn btn--xl btn--ouro" href="https://cabanaspizzas.menudino.com/?utm_source=site&amp;utm_medium=como-pedir" data-track="cardapio" target="_blank" rel="noopener">Ver cardápio e pedir</a>
@@ -626,6 +641,36 @@ ul,ol{padding:0;list-style:none}
   atualizaCabecalho();
   window.addEventListener('scroll', atualizaCabecalho, { passive: true });
   window.addEventListener('pageshow', atualizaCabecalho);
+
+  // Mantém details/summary nativos, animando a altura também ao fechar.
+  document.querySelectorAll('.faq details').forEach(function (item) {
+    if (!item.animate) return;
+    var resumo = item.querySelector('summary'), animacao = null, aberto = item.open;
+    resumo.addEventListener('click', function (e) {
+      e.preventDefault();
+      var inicio = item.getBoundingClientRect().height;
+      if (!animacao) aberto = item.open;
+      if (animacao) animacao.cancel();
+      aberto = !aberto;
+      item.open = true;
+      item.style.height = 'auto';
+      var fim = aberto ? item.getBoundingClientRect().height : resumo.getBoundingClientRect().height + 1;
+      item.classList.toggle('faq--fechando', !aberto);
+      item.style.height = inicio + 'px';
+      item.style.overflow = 'hidden';
+      animacao = item.animate([{ height: inicio + 'px' }, { height: fim + 'px' }], {
+        duration: matchMedia('(prefers-reduced-motion: reduce)').matches ? 180 : 280,
+        easing: 'cubic-bezier(.22,1,.36,1)'
+      });
+      animacao.onfinish = function () {
+        item.open = aberto;
+        item.style.height = '';
+        item.style.overflow = '';
+        item.classList.remove('faq--fechando');
+        animacao.cancel(); animacao = null;
+      };
+    });
+  });
 
   // Aviso manual de fechamento (feriados/folgas). null = desligado.
   // Ex.: { ate: '2026-12-25', volta: 'sexta, 26/12' } → "Hoje estamos fechados · voltamos sexta, 26/12" até a data (inclusive).
