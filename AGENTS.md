@@ -5,7 +5,8 @@ Site one-page estático (HTML + CSS + JS puro, sem framework) para SEO local de 
 ## Estrutura
 - `src/` — **versão de desenvolvimento**. Edite aqui. `src/index.html` é a página inteira, com CSS e JS embutidos e comentados.
 - `dist/` — **versão de publicação**, gerada por `node tools/build.mjs`. Nunca edite à mão. Fica fora do Git.
-- `tools/build.mjs` — copia `src` para `dist`, compacta o HTML (html-minifier-terser via npx) e **falha** se encontrar `[CONFIRMAR]`, `FOTO REAL` ou `support.js`.
+- `tools/build.mjs` — executa lint de HTML/CSS/JS, copia `src` para `dist`, minifica HTML/CSS/JS e valida os arquivos publicados. **Falha** com erros de lint, assets ausentes, imagens sem dimensões, lazy-load incorreto, preload divergente, JSON-LD inválido ou marcadores de rascunho.
+- `tools/lint.mjs` — lint com versões fixas via npx, sem dependências nos arquivos publicados. Extrai CSS/JS embutidos para `.wrangler/lint/`; executa HTML Validate, ESLint e Stylelint. `tools/validar-publicacao.mjs` verifica o artefato minificado.
 - `tools/build-imagens.mjs` — gera AVIF/WebP de `fotos-originais/` para `src/assets/img/`, mais os ícones e o `favicon.ico`. Precisa do sharp numa pasta temporária (`SHARP_DIR`), sem entrar como dependência do projeto.
 - `wrangler.jsonc` + `worker/index.js` — deploy no Cloudflare. O worker redireciona `www` para o domínio sem www (301) e serve o `dist/`.
 - `fotos-originais/` — fotos brutas. **Não publicar**: os JPGs têm um palavrão no campo copyright do EXIF. O sharp remove os metadados.
@@ -16,7 +17,7 @@ Site one-page estático (HTML + CSS + JS puro, sem framework) para SEO local de 
 1. Editar `src/`. Para ver no navegador, use a configuração `site-dev` de `.claude/launch.json` (porta 8090). Para testar o status de funcionamento, use `?status=aberto|antes|segunda|depois|domingo|feriado`.
 2. Trocar foto: colocar o arquivo em `fotos-originais/`, ajustar o recorte em `build-imagens.mjs` e rodar o script. Se uma imagem mudar, troque o nome dela (o cache de `/assets/*` é de 1 ano).
 3. `node tools/build.mjs`, conferir o `dist/` (configuração `site-dist`, porta 8091) e seguir `docs/VALIDACAO.md`.
-4. Deploy: `npx wrangler@4 deploy`. O login é por `npx wrangler@4 login` (OAuth no navegador); nunca peça token no chat.
+4. Deploy: `npx wrangler@4 deploy`. O `build.command` do Wrangler executa automaticamente lint, build e validação antes de enviar arquivos. Manter esse comando configurado e corrigir as falhas antes de publicar. O login é por `npx wrangler@4 login` (OAuth no navegador); nunca peça token no chat.
 
 ## Regra nº 1: conversão primeiro
 O site existe para gerar **pedido**: clique em "Ver cardápio e pedir", no WhatsApp ou na ligação. **Antes de aplicar qualquer mudança pedida, avalie e diga o impacto na conversão** (neutro, positivo ou risco, e como mitigar). Se houver risco, proponha alternativa e pergunte.
@@ -48,10 +49,15 @@ Pontos a checar:
   - Sintoma: buscando pelo nome/endereço (`maps?q=Pizzaria+Cabanas...`), o mapa mostra o mundo inteiro.
   - Solução: use as coordenadas `q=-20.4473307,-54.5762186&z=16&output=embed`.
 - **`npx` via `execFileSync` no Windows**
-  - Sintoma: falha com o caminho do projeto, que tem espaços.
-  - Solução: passe caminhos relativos e `cwd`, como já está em `build.mjs`.
+  - Sintoma: caminhos com espaços falham; `shell: true` com argumentos também gera aviso de segurança do Node.
+  - Solução: `tools/npx.mjs` chama o CLI oficial do npm com `process.execPath`, sem shell e sem interpolação. Usar esse helper nos scripts do projeto.
 - **Preview local mostra versão antiga**
   - Causa: cache do navegador.
   - Solução: acrescente `?v=N` à URL.
 - **Overpass API (OSM) trava ou dá 502**
   - Solução: para listar bairros, use o reverse geocoding do Nominatim numa grade de pontos, com 1 requisição por segundo.
+- **Notas antigas ou alertas genéricos de auditoria**
+  - Sintoma: reenviar o domínio pode reabrir o relatório antigo, e a ferramenta pode marcar CDN ou minificação como ausentes mesmo com respostas válidas.
+  - Prevenção: registrar horário, URL do relatório e versão publicada; confirmar o conteúdo novo e os headers. Separar nota nova, relatório em cache, limite gratuito e dependência de terceiros. Não remover Analytics, mapa ou conteúdo de SEO apenas para eliminar um alerta.
+- **Acesso de robôs não equivale a presença em IA**
+  - Robots permitido e User-Agent simulado com HTTP 200 não comprovam acesso por IP oficial nem citação. Conferir políticas e tráfego no Cloudflare e inspeções ao vivo no Google/Bing. Interpretar citações somente no período efetivamente coberto pelo relatório.

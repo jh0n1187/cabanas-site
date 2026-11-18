@@ -1,0 +1,35 @@
+// Regras de correção; a formatação compacta do CSS/JS existente é preservada.
+export default [{
+  files: ['**/*.js', '**/*.mjs'],
+  languageOptions: {
+    ecmaVersion: 2024,
+    globals: Object.fromEntries(['process', 'Buffer', 'console', 'window', 'document', 'history', 'location', 'matchMedia', 'IntersectionObserver', 'requestAnimationFrame', 'cancelAnimationFrame', 'setTimeout', 'clearTimeout', 'setInterval', 'URLSearchParams'].map(nome => [nome, 'readonly'])),
+  },
+  rules: {
+    'no-undef': 'error',
+    'no-unused-vars': ['error', { args: 'none', caughtErrors: 'none' }],
+    'no-redeclare': 'error',
+    'no-dupe-args': 'error',
+    'no-dupe-keys': 'error',
+    'no-duplicate-case': 'error',
+    'no-unreachable': 'error',
+    'no-constant-condition': 'error',
+    'no-constant-binary-expression': 'error',
+    'no-cond-assign': ['error', 'always'],
+    'no-debugger': 'error',
+    'no-func-assign': 'error',
+    'no-invalid-regexp': 'error',
+    'no-sparse-arrays': 'error',
+    'no-unsafe-finally': 'error',
+    'no-unsafe-optional-chaining': 'error',
+    'no-async-promise-executor': 'error',
+    'no-self-assign': 'error',
+    'no-unexpected-multiline': 'error',
+    'valid-typeof': 'error',
+    'use-isnan': 'error',
+    'for-direction': 'error',
+  },
+}, {
+  files: ['worker/**/*.js'],
+  languageOptions: { globals: { URL: 'readonly', Response: 'readonly' } },
+}];

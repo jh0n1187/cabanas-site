@@ -4,6 +4,9 @@
   "name": "pizzaria-cabanas",
   "compatibility_date": "2026-11-17",
   "main": "worker/index.js",
+  "build": {
+    "command": "node tools/build.mjs"
+  },
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",

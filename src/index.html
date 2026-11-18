@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
@@ -32,6 +32,7 @@ window.addEventListener('pageshow', function () {
 <meta name="twitter:description" content="Pizza artesanal de fermentação longa com delivery e retirada no Carandá Bosque, Campo Grande–MS.">
 <meta name="twitter:image" content="https://pizzariacabanas.com.br/og-image.jpg">
 <link rel="preload" href="/assets/fonts/dm-serif-display-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" type="image/avif" imagesrcset="/assets/img/hero-cabanas-gourmet-v2-480.avif 480w, /assets/img/hero-cabanas-gourmet-v2-640.avif 640w, /assets/img/hero-cabanas-gourmet-v2-720.avif 720w, /assets/img/hero-cabanas-gourmet-v2-864.avif 864w" imagesizes="(min-width: 1693px) 880px, (min-width: 900px) 52vw, 100vw" fetchpriority="high">
 <script type="application/ld+json">
 {
@@ -118,9 +119,10 @@ ul,ol{padding:0;list-style:none}
 .acoes{display:flex;flex-wrap:wrap;gap:10px}
 
 /* Cabeçalho */
-.topo{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--bordo);box-shadow:0 4px 20px rgba(42,10,12,.16);transition:background-color .35s,box-shadow .35s}
+.topo{position:fixed;top:0;left:0;right:0;z-index:50}
 .topo::before{content:"";position:absolute;inset:0 0 -48px;z-index:-1;pointer-events:none;background:linear-gradient(to bottom,rgba(42,10,12,.92),rgba(42,10,12,.65) 55%,transparent);opacity:0;transition:opacity .35s}
-.topo--banner{background:transparent;box-shadow:none}
+.topo::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:var(--bordo);box-shadow:0 4px 20px rgba(42,10,12,.16);opacity:1;transition:opacity .35s}
+.topo--banner::after{opacity:0}
 .topo--banner::before{opacity:1}
 .topo .wrap{padding:8px 20px;display:flex;align-items:center;gap:24px;min-height:72px}
 .topo__logo{margin-right:auto;border-radius:6px}
@@ -323,7 +325,7 @@ ul,ol{padding:0;list-style:none}
 
 <header class="topo">
   <div class="wrap">
-    <a class="topo__logo" href="#topo" aria-label="Pizzaria Cabanas, início"><img src="/assets/img/logo-cabanas-transparente-248.webp" alt="Pizzaria Cabanas – Pizzaria Delivery" width="124" height="56"></a>
+    <a class="topo__logo" href="#topo" aria-label="Pizzaria Cabanas, início"><img src="/assets/img/logo-cabanas-transparente-v2-248.webp" srcset="/assets/img/logo-cabanas-transparente-v2-124.webp 1x, /assets/img/logo-cabanas-transparente-v2-248.webp 2x" alt="Pizzaria Cabanas – Pizzaria Delivery" width="124" height="56"></a>
     <nav aria-label="Principal">
       <a href="#cardapio">Cardápio</a>
       <a href="#como-pedir">Como pedir</a>
@@ -435,7 +437,7 @@ ul,ol{padding:0;list-style:none}
     <!-- Carrossel automático, suave e infinito (o último emenda no primeiro). Arrastar pausa e volta a rodar sozinho.
          As cópias para o efeito infinito são criadas pelo script (não ficam no HTML, então o Google lê cada depoimento uma vez).
          Depoimentos reais e públicos do Google e do iFood (coletados em 17/11/2026); só a pontuação foi ajustada. -->
-    <div class="carrossel" role="region" aria-roledescription="carrossel" aria-label="Depoimentos de clientes">
+    <section class="carrossel" aria-roledescription="carrossel" aria-label="Depoimentos de clientes">
       <div class="revs" id="revs" tabindex="0">
         <figure class="rev"><blockquote>Foi a melhor pizza que já comi! Sou de SP e estou de passagem em Campo Grande, resolvi experimentar e foi a melhor escolha… atendimento de excelência, rapidez no preparo e o sabor ESPETACULAR</blockquote><figcaption><strong>Carla Mikcel</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
         <figure class="rev"><blockquote>Maravilhoso, melhor pizza de Campo Grande. Já faz 3 anos que eu aprecio a pizza da Cabanas e até hoje, rodando Campo Grande, poucas chegaram perto</blockquote><figcaption><strong>Juan Saab</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
@@ -449,7 +451,7 @@ ul,ol{padding:0;list-style:none}
         <figure class="rev"><blockquote>Cliente há anos. Uma das melhores pizzas de Campo Grande, produto de qualidade e preço justo.</blockquote><figcaption><strong>Luiz Bonelli</strong><a href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Google</a></figcaption></figure>
         <figure class="rev"><blockquote>Melhor pizzaria de CG.</blockquote><figcaption><strong>Luciana</strong><a href="https://www.ifood.com.br/delivery/campo-grande-ms/pizzaria-cabanas-caranda-bosque/bbf4cc48-bc25-472c-88c7-6c3fb110c2bf" target="_blank" rel="noopener">iFood</a></figcaption></figure>
       </div>
-    </div>
+    </section>
     <div class="acoes">
       <a class="btn btn--bordo" href="https://maps.google.com/?cid=16426026712480275371" target="_blank" rel="noopener">Ver todas as avaliações no Google</a>
       <a class="btn btn--linha" href="https://g.page/r/CavbdiRE-PTjEAI/review" data-track="avaliar" target="_blank" rel="noopener">Avaliar a Cabanas</a>
@@ -461,9 +463,9 @@ ul,ol{padding:0;list-style:none}
   <div class="wrap sobre">
     <figure>
       <picture>
-        <source type="image/avif" srcset="/assets/img/brie-geleia-pimenta-540.avif 540w, /assets/img/brie-geleia-pimenta-1080.avif 1080w" sizes="(min-width: 900px) 560px, 100vw">
-        <source type="image/webp" srcset="/assets/img/brie-geleia-pimenta-540.webp 540w, /assets/img/brie-geleia-pimenta-1080.webp 1080w" sizes="(min-width: 900px) 560px, 100vw">
-        <img src="/assets/img/brie-geleia-pimenta-1080.webp" alt="Pizza de brie com geleia de pimenta e tomate cereja da Pizzaria Cabanas, Campo Grande" width="1080" height="720" loading="lazy" decoding="async">
+        <source type="image/avif" srcset="/assets/img/brie-geleia-pimenta-v2-400.avif 400w, /assets/img/brie-geleia-pimenta-v2-640.avif 640w, /assets/img/brie-geleia-pimenta-v2-800.avif 800w, /assets/img/brie-geleia-pimenta-v2-1080.avif 1080w" sizes="(min-width: 1600px) 568px, (min-width: 1240px) calc(600px - 2vw), (min-width: 834px) calc(48vw - 20px), calc(100vw - 40px)">
+        <source type="image/webp" srcset="/assets/img/brie-geleia-pimenta-v2-400.webp 400w, /assets/img/brie-geleia-pimenta-v2-640.webp 640w, /assets/img/brie-geleia-pimenta-v2-800.webp 800w, /assets/img/brie-geleia-pimenta-v2-1080.webp 1080w" sizes="(min-width: 1600px) 568px, (min-width: 1240px) calc(600px - 2vw), (min-width: 834px) calc(48vw - 20px), calc(100vw - 40px)">
+        <img src="/assets/img/brie-geleia-pimenta-v2-1080.webp" alt="Pizza de brie com geleia de pimenta e tomate cereja da Pizzaria Cabanas, Campo Grande" width="1080" height="720" loading="lazy" decoding="async">
       </picture>
       <figcaption>Brie com Geleia de Pimenta</figcaption>
     </figure>
@@ -565,19 +567,21 @@ ul,ol{padding:0;list-style:none}
         </div>
       </div>
       <div class="col">
-        <figure class="retirada">
+        <div class="retirada">
+          <figure>
           <picture>
             <source type="image/avif" srcset="/assets/img/balcao-recepcao-600.avif 600w, /assets/img/balcao-recepcao-1200.avif 1200w" sizes="(min-width: 900px) 560px, 100vw">
             <source type="image/webp" srcset="/assets/img/balcao-recepcao-600.webp 600w, /assets/img/balcao-recepcao-1200.webp 1200w" sizes="(min-width: 900px) 560px, 100vw">
             <img src="/assets/img/balcao-recepcao-1200.webp" alt="Recepção da Pizzaria Cabanas com o logo na parede e a cozinha ao fundo, no Carandá Bosque" width="1200" height="675" loading="lazy" decoding="async">
           </picture>
           <figcaption>Nossa recepção e cozinha no Carandá Bosque</figcaption>
+          </figure>
           <div class="retirada__txt">
             <h3>Retirada no balcão: disponível</h3>
             <p>Retire no balcão: Av. Antônio Teodorowich, 119 – Carandá Bosque, Campo Grande–MS, CEP 79032-570</p>
             <p class="nota">Terça a domingo, das 18h às 22h45 · Segunda: fechado</p>
           </div>
-        </figure>
+        </div>
         <!-- loading="lazy": o navegador só baixa o mapa quando a seção se aproxima da tela (não pesa no carregamento inicial) -->
         <div class="mapa">
           <iframe title="Mapa: Pizzaria Cabanas, Av. Antônio Teodorowich, 119 – Carandá Bosque" src="https://maps.google.com/maps?q=-20.4473307,-54.5762186&amp;hl=pt-BR&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
@@ -621,7 +625,7 @@ ul,ol{padding:0;list-style:none}
     <div class="col">
       <h2>Contato</h2>
       <a href="https://wa.me/5567996909538?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20quero%20pedir%20uma%20pizza." data-track="whatsapp" target="_blank" rel="noopener">WhatsApp: (67) 99690-9538</a>
-      <a href="tel:+556732130291" data-track="telefone">Telefone: (67) 3213-0291</a>
+      <a href="tel:+556732130291" data-track="telefone">Telefone:&nbsp;(67)&nbsp;3213&#8209;0291</a>
       <a href="https://www.instagram.com/pizzariacabanascg/" target="_blank" rel="noopener">Instagram</a>
       <a href="https://www.facebook.com/pizzariacabanascg/" target="_blank" rel="noopener">Facebook</a>
     </div>

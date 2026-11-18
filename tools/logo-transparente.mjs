@@ -23,5 +23,5 @@ export async function geraLogoTransparente(sharp, origem, destino) {
   }
   await sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } })
     .resize(248, 112, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-    .webp({ lossless: true }).toFile(destino);
+    .webp({ lossless: true, quality: 100, effort: 6 }).toFile(destino);
 }

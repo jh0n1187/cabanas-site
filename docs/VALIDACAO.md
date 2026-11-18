@@ -7,6 +7,7 @@ Use a cada deploy. As metas valem para o **celular**, que é onde está o públi
 | # | O que | Como | Meta |
 |---|---|---|---|
 | 1 | Build limpo | `node tools/build.mjs` | Sem erro. O build já bloqueia `[CONFIRMAR]`, `FOTO REAL` e `support.js` |
+| 1a | Lint HTML/CSS/JS | `node tools/lint.mjs` (também executado pelo build) | Zero erros e zero avisos; corrigir antes de publicar |
 | 2 | Arquivos referenciados existem | Conferir que toda imagem, fonte e ícone citado no HTML existe em `dist/` | Nenhum faltando |
 | 3 | Primeira tela no celular | Preview `site-dist` a 375×667 | H1, status, texto e os 2 botões visíveis sem rolar |
 | 4 | Desktop | Preview a 1440×900 | Layout do protótipo v3 |
@@ -19,6 +20,10 @@ Use a cada deploy. As metas valem para o **celular**, que é onde está o públi
 
 Medido localmente em 17/11/2026: Performance 97, Acessibilidade 100, Boas práticas 100, SEO 100, LCP 2,6 s, CLS 0, TBT 0 ms.
 Os avisos de cache e compressão vêm do servidor de teste local. No Cloudflare, o `_headers` e o Brotli resolvem.
+
+O deploy direto pelo Wrangler executa `node tools/build.mjs` automaticamente. A validação de `dist/` confere arquivos locais, dimensões/alt, lazy/async das imagens secundárias, mapa adiado, prioridade do banner e seu preload responsivo, sintaxe JS, Restaurant/FAQPage e cache dos assets. Em produção, conferir a negociação real de compressão com `Accept-Encoding: br, gzip`: não adicionar `Content-Encoding` manualmente a conteúdo que não foi comprimido. AVIF/WebP já são compactados; a ausência de Brotli nesses arquivos não é erro.
+
+Para mudanças somente de desempenho, comparar com a versão aprovada: título, metadados, canonical, headings, textos, links, alt, JSON-LD, robots e sitemap; verificar leitura sem JavaScript. O lazy-load não deve esconder textos ou dados estruturados. O banner e o logo da primeira tela não devem ser adiados.
 
 ## 2. Logo depois do deploy (no ar)
 

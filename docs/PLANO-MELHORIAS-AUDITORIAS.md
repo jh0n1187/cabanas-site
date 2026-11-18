@@ -1,7 +1,7 @@
 # Plano de melhorias a partir das auditorias
 
-Leitura em 17/11/2026. Base publicada: commit `3320570`.
-As etapas abaixo formam o plano de trabalho. O estado do primeiro lote local está registrado na seção 6; as demais ações continuam propostas.
+Histórico iniciado em 17/11/2026, a partir do commit `3320570`.
+As primeiras seções registram o diagnóstico e o plano original. Os resultados mais recentes, publicações e limitações estão nas seções 8 a 10.
 Objetivo: facilitar pedidos e tornar inequívoca a identidade da Pizzaria Cabanas de Campo Grande–MS.
 
 ## 1. Resultados e limitações
@@ -212,3 +212,72 @@ Build e revisão de espaços passaram. Testes funcionais cobriram estados de ate
 Lote aprovado e publicado em 17/11/2026 no Cloudflare Workers, versão `6f70b4b6-1052-4e58-b508-ed7cbbf2e29d`. Na conferência em produção, o HTML corresponde ao build (com a inclusão esperada do Cloudflare Analytics); 31 recursos referenciados carregaram com conteúdo correto; os dois JSON-LD são válidos; robots e sitemap responderam; HTTP/www redirecionaram com 301 e a página inexistente retornou 404. A página respondeu corretamente aos seis identificadores simulados de robôs, o que não valida suas origens por IP. O teste funcional em produção passou para estados de atendimento, FAQ, cabeçalho, retorno suave ao topo e parallax, sem erros de JavaScript.
 
 Próximo passo: repetir os testes públicos comparáveis, registrando data, versão e condições; respeitar cotas dos serviços. Os resultados de presença em IA e backlinks dependem de observação posterior e ações externas, não estão resolvidos apenas pelo código.
+
+## 9. Nova rodada pública após publicar `b83036c` — 17/11/2026
+
+| Teste | Antes | Nova rodada | Observação |
+|---|---|---|---|
+| [PageSpeed mobile](https://pagespeed.web.dev/analysis/https-pizzariacabanas-com-br/kwrs3c2tqa?form_factor=mobile) | 99 / 100 / 100 / 100; LCP 2,1 s | **100 / 100 / 100 / 100; LCP 0,9 s**, TBT 0 e CLS 0 | Relatório das 21h00, Lighthouse 13.6.0. Sem dados de campo. |
+| PageSpeed desktop, mesmo relatório | Quatro categorias em 100 no teste anterior registrado | **100 / 100 / 100 / 100**, LCP 0,5 s, TBT 0, CLS 0,003 | Resultado de laboratório; não equivale a experiência de todos os usuários. |
+| Navegação agêntica do PageSpeed | 2/2 | **2/2** em mobile e desktop | Árvore de acessibilidade e estabilidade aprovadas. Não mede frequência de recomendação por IA. |
+| [SpeedVitals](https://speedvitals.com/report/pizzariacabanas.com.br/KUpFSc) | 94; LCP 3,0 s; 278,8 KB | **100; LCP 1,1 s; 176,8 KB**, TBT 0 e CLS 0 | Mesmo local, Carolina do Sul/EUA, mobile e Lighthouse 12.8.2. O elemento LCP passou da foto para o texto do hero. Não atribuir toda variação somente à compressão. |
+| Yoast | SEO básico aprovado; cinco ocorrências de links externos com 403/429 | Critérios básicos continuam aprovados; reconheceu o novo H2 de Campo Grande–MS; mesmos cinco apontamentos | A URL sem parâmetro reabriu conteúdo antigo; a nova execução usou `?v=auditoria-b83036c`. O canonical apontando para a raiz é esperado nesse teste. Os cinco alertas são quatro repetições do iFood 403 e Instagram 429, não arquivos do nosso site. |
+| Organicus | Geral 55; visibilidade 0; compreensão 72; conteúdo 85; técnico 100; estrutura 89; presença externa 4 | **Sem nova nota** | Reenviar o domínio exibiu “JÁ ANALISADO” e reabriu o relatório antigo. Não tratar essas notas como medição do lote publicado. |
+| SEOptimer | Geral A-; SEO/GEO/usabilidade A+; desempenho A; links F | **Sem nova nota** | Ao tentar atualizar, informou limite diário gratuito. O relatório visível permaneceu anterior. |
+| Seobility | Sem resultado | **Sem resultado** | Continua “No checks left”. |
+| RD Station | 40% geral; SEO 6/6; mobile 1/1; velocidade 3/8 | **Relatório aberto de 40%; nova medição não confirmada** | A nova submissão chegou ao formulário de nome/e-mail e comunicação de marketing; não foi preenchido pelo agente. O usuário pediu avaliação com os resultados disponíveis. |
+
+### Robôs e indexação reconferidos
+
+- Search Console: a visão de índice informa página indexada. Novo teste ao vivo, às 21h03: URL disponível para o Google e possibilidade de indexação confirmada. Não foi solicitado novo rastreamento manual nesta rodada.
+- Bing: índice ainda em “Discovered but not crawled”. Novo teste ao vivo, às 21h04: **URL can be indexed by Bing**, **No SEO/GEO issues found**, dois tipos de marcação. Não confundir possibilidade técnica com indexação concluída.
+- Bing AI Performance: continua sem citações no período encerrado em 16/11, anterior ao lançamento; não há medição posterior suficiente para atribuir evolução às mudanças.
+- Cloudflare: os 33 bloqueios individuais continuam desligados. As políticas gerais **Search**, **Training** e **Agents**, e os agentes pessoais configuráveis, estavam em **Allow (do not block)**. Bot Fight Mode e AI Labyrinth estavam desligados. Somente leitura; nenhuma proteção foi alterada.
+- O painel registrava 126 solicitações classificadas e nenhuma malsucedida; inclui possíveis simulações nossas. Não comprova visitas verificadas por IP nem citações.
+- Às 21h06, simulação de Googlebot, bingbot, OAI-SearchBot, ChatGPT-User, Claude-SearchBot e PerplexityBot: página e robots HTTP 200, sem `X-Robots-Tag` bloqueador nem `cf-mitigated`; identidade presente no HTML e sitemap 200.
+
+### Interpretação dos 40% da RD
+
+O relatório aprova todos os seis critérios de SEO e o de mobile. Em velocidade, aprova cache e compactação de HTML/CSS; reprova resposta do servidor, imagens, CDN, JS/CSS de bloqueio e compactação de JS. O questionário de persuasão continua sem respostas; a nota global não é uma nota isolada de SEO nem uma medida Lighthouse.
+
+Os headers públicos reconferidos mostraram `Server: cloudflare`, `CF-Ray` em GRU, `CF-Cache-Status: HIT`, HTML com `Content-Encoding: br` e imagens com cache de um ano. O build aplica `--minify-css true` e `--minify-js true`. A RD não identifica o recurso exato responsável pela reprovação de JS; portanto, não há causa demonstrada para atribuir o alerta ao nosso código ou ao Analytics. Não substituir CDN nem alterar o conteúdo para satisfazer esse detector.
+
+### Insights concretos que ainda justificaram um lote adicional
+
+- Mobile: economia de imagens estimada caiu de 88 para 36 KiB. Restavam seleção dos cards em telas densas e compressão/seleção do logo. Não forçar imagens pequenas em telas retina somente para zerar a estimativa.
+- Desktop: 81 KiB estimados, principalmente brie 1080 px servido num espaço próximo de 573 px e o logo 2x em tela 1x.
+- Animação não composta: transição de `box-shadow` no cabeçalho. Substituir por opacidade de uma camada com sombra estática, preservando o efeito.
+- Rede e CLS: a fonte DM Sans é descoberta após o HTML; o CLS desktop de 0,003 foi associado à fonte. Antecipar a fonte usada no primeiro texto, sem trocar tipografia.
+- Cache de 4 KiB e JavaScript legado de 10 KiB pertencem ao Analytics do Cloudflare. O mesmo script consumiu cerca de 9 ms no teste mobile. Preservado; não remover a medição de tráfego apenas para eliminar alertas.
+- Reflow desktop: 31 ms sem atribuição. Precisa de rastreamento antes de responsabilizar um trecho; não foi tratado como bug comprovado.
+
+## 10. Boas práticas garantidas no deploy e lote final publicado
+
+Publicação autorizada pelo proprietário e concluída em 17/11/2026. Versão Cloudflare Workers: `57e9582a-668a-4cbc-8887-8799c5a526c2`.
+
+### Implementação
+
+- Wrangler executa o build automaticamente antes de publicar. O build passa por lint HTML, ESLint e Stylelint com versões fixas e zero avisos; minifica HTML/CSS/JS; depois valida o artefato. Ferramentas de desenvolvimento via npx não entram em produção.
+- A validação bloqueia assets ausentes, imagens sem dimensões/alt, fotos secundárias sem lazy/async, iframe sem lazy/título, banner com lazy ou sem prioridade alta, preload divergente, script externo bloqueante, JS/JSON-LD inválido e cache de assets ausente. Cinco casos negativos foram exercitados e bloqueados: arquivo ausente, banner adiado, foto sem lazy, imagem sem dimensões e preload divergente.
+- Foto de brie com AVIF/WebP e larguras intermediárias: no desktop de referência, passa de AVIF 1080 px/101.043 bytes para 640 px/29.630 bytes, aproximadamente 71% menos bytes nesse cenário. Telas densas continuam podendo selecionar arquivos maiores.
+- Logo transparente com versões 1x/2x em WebP sem perdas: 4.242 bytes na versão 124 px. Os pixels decodificados da versão 248 px são idênticos aos da marca aprovada. Sem redesenho por IA nem troca de cores.
+- Cabeçalho mantém a transição aprovada usando opacidade sobre fundo/sombra estáticos. A fonte DM Sans recebe preload. O hero continua prioritário, sem lazy e sem download duplicado.
+- Lint também apontou ajustes sem mudança de conteúdo: DOCTYPE, seção nativa do carrossel e agrupamento válido de figure/figcaption na retirada. O telefone mantém os mesmos dígitos e destino `tel:`, com espaços/hífen que evitam quebra de linha.
+- Execução do npx no Windows passou a usar o CLI oficial sem shell, resolvendo o aviso do Node e preservando caminhos com espaços.
+
+### Preservação de SEO e experiência
+
+Comparação automatizada com `b83036c`, sem JavaScript: título, metadados, canonical, headings, conteúdo visível, links, alt e JSON-LD preservados; robots e sitemap idênticos. Somente espaços/hífen do telefone foram normalizados na comparação tipográfica. Textos continuam presentes no HTML, sem depender do lazy-load ou de renderização por JS.
+
+Testes em 375 px (densidades 1x/2x), 834 px e 1440 px passaram: CTAs visíveis, ausência de transbordamento, seleção correta do logo e da foto de brie, banner solicitado uma vez e mapa adiado no celular. Comparação visual concluída. Carrossel, arraste/retomada, estados de atendimento, FAQ, rolagem suave e parallax passaram. O lint e a validação foram executados novamente pelo próprio deploy, antes do envio dos assets.
+
+### Conferência após publicar
+
+- HTML publicado igual ao build, exceto inclusão esperada do Analytics pelo Cloudflare.
+- 36 assets referenciados conferidos por conteúdo, HTTP 200 e cache de um ano. HTML com Brotli negociado, servidor Cloudflare e cache HIT.
+- Página e robots HTTP 200 nos seis User-Agents simulados; sitemap HTTP 200. Mantida a ressalva de que simulação não comprova origem oficial do rastreador nem futuras citações.
+- Teste funcional contra produção passou sem erros de JavaScript.
+- [PageSpeed final, 21h24](https://pagespeed.web.dev/analysis/https-pizzariacabanas-com-br/ze4503jtp9?form_factor=mobile): **100/100/100/100 e 2/2 agêntico**, tanto no celular quanto no desktop. Mobile: LCP 1,0 s, TBT 0, CLS 0. Desktop: LCP 0,5 s, TBT 0, CLS 0,001. Sem dados de campo disponíveis.
+- No desktop, os avisos de entrega de imagens, reflow e animação não composta deixaram de aparecer nessa rodada. No celular, permanece estimativa de 35 KiB de imagens; cache/JS legado continuam associados ao Analytics. O DOM foi listado com 372 elementos, profundidade 10 e máximo de 13 filhos: não justifica remover conteúdo útil de SEO para reduzir uma estatística.
+
+As lições duráveis foram incorporadas ao `AGENTS.md` e ao roteiro `docs/VALIDACAO.md`: validar o artefato realmente enviado, negociar compressão sem forjar headers, distinguir relatório novo de cache e não confundir acesso de robôs com presença em respostas de IA. Nenhuma regra de segurança, perfil externo ou política de robôs foi alterada para aumentar notas.
