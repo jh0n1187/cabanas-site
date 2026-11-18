@@ -5,7 +5,7 @@ Fontes: perfil do Google Maps (visualização pública) e cardápio do MenuDino.
 ## 1. Perfil no Google
 - **Nota:** 4,4, com **369 avaliações**. No site, mantenha "360+".
 - **Endereço:** Av. Antônio Teodorowich, 119 – Carandá Bosque, Campo Grande – MS, 79032-570. O Plus Code é HC3F+3G.
-- **Telefone exibido:** (67) 3213-0291. O site cadastrado é cabanaspizzas.menudino.com e deve ser trocado pelo novo site quando ele for publicado.
+- **Telefone exibido:** (67) 3213-0291. Na reconferência pública de 17/11/2026, o site cadastrado já é pizzariacabanas.com.br; o link de cardápio continua cabanaspizzas.menudino.com.
 - **Fotos no perfil:** 89.
 
 ### Depoimentos para o site

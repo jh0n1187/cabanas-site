@@ -21,20 +21,31 @@ mkdirSync(out, { recursive: true });
 // crop: região do original { left, top, width, height }; widths: larguras geradas
 const fotos = [
   // hero: qualidade menor porque é o LCP (maior elemento da primeira tela)
-  { nome: 'hero-cabanas-gourmet', arq: 'pizza 2.jpg', crop: { left: 30, top: 0, width: 864, height: 1080 }, widths: [480, 720, 864], q: { avif: 30, webp: 55 } },
-  { nome: 'cabanas-gourmet', arq: 'pizza 2.jpg', crop: { left: 40, top: 200, width: 860, height: 645 }, widths: [400, 800] },
-  { nome: 'chocolate-com-morango', arq: 'pizza 3.jpg', crop: { left: 0, top: 34, width: 1350, height: 1012 }, widths: [400, 800] },
+  { nome: 'hero-cabanas-gourmet-v2', arq: 'pizza 2.jpg', crop: { left: 30, top: 0, width: 864, height: 1080 }, widths: [480, 640, 720, 864], q: { avif: 28, webp: 55 }, effort: 7 },
+  { nome: 'cabanas-gourmet-v2', arq: 'pizza 2.jpg', crop: { left: 40, top: 200, width: 860, height: 645 }, widths: [400, 640, 800], q: { avif: 34, webp: 64 }, effort: 7 },
+  { nome: 'chocolate-com-morango-v2', arq: 'pizza 3.jpg', crop: { left: 0, top: 34, width: 1350, height: 1012 }, widths: [400, 640, 800], q: { avif: 36, webp: 64 }, effort: 7 },
   { nome: 'brie-geleia-pimenta', arq: 'pizza 1.jpg', crop: { left: 0, top: 0, width: 1080, height: 720 }, widths: [540, 1080] },
   { nome: 'balcao-recepcao', arq: 'salao.jpg', crop: { left: 0, top: 380, width: 1200, height: 675 }, widths: [600, 1200] },
 ];
 
-for (const f of fotos) {
+// Permite regenerar apenas as fotos selecionadas, sem tocar nos demais arquivos.
+// Ex.: node tools/build-imagens.mjs hero-cabanas-gourmet-v2 cabanas-gourmet-v2
+const selecionadas = process.argv.slice(2);
+if (selecionadas.some((nome) => !fotos.some((f) => f.nome === nome))) {
+  throw new Error('Nome de foto desconhecido. Confira a lista em build-imagens.mjs.');
+}
+for (const f of fotos.filter((f) => !selecionadas.length || selecionadas.includes(f.nome))) {
   for (const w of f.widths) {
     const base = sharp(src(f.arq)).rotate().extract(f.crop).resize({ width: w });
     const q = f.q || { avif: 40, webp: 66 };
-    await base.clone().avif({ quality: q.avif, effort: 6 }).toFile(join(out, `${f.nome}-${w}.avif`));
+    await base.clone().avif({ quality: q.avif, effort: f.effort || 6 }).toFile(join(out, `${f.nome}-${w}.avif`));
     await base.clone().webp({ quality: q.webp }).toFile(join(out, `${f.nome}-${w}.webp`));
   }
+}
+
+if (selecionadas.length) {
+  console.log('Fotos selecionadas geradas.');
+  process.exit(0);
 }
 
 // Logo horizontal com transparência real — 2x de 124x56.

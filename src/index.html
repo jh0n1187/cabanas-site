@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+// Sem âncora, uma abertura/reabertura começa no topo; links diretos preservam a seção.
+if ('scrollRestoration' in history) history.scrollRestoration = location.hash ? 'auto' : 'manual';
+window.addEventListener('pageshow', function () {
+  if (!location.hash) window.scrollTo({ top: 0, behavior: 'instant' });
+});
+</script>
 <title>Pizzaria Cabanas | Delivery no Carandá Bosque, Campo Grande</title>
 <meta name="description" content="Pizza artesanal de fermentação longa com delivery e retirada no Carandá Bosque, Campo Grande–MS. Peça online ou pelo WhatsApp, de terça a domingo.">
 <link rel="canonical" href="https://pizzariacabanas.com.br/">
@@ -25,7 +32,7 @@
 <meta name="twitter:description" content="Pizza artesanal de fermentação longa com delivery e retirada no Carandá Bosque, Campo Grande–MS.">
 <meta name="twitter:image" content="https://pizzariacabanas.com.br/og-image.jpg">
 <link rel="preload" href="/assets/fonts/dm-serif-display-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" type="image/avif" imagesrcset="/assets/img/hero-cabanas-gourmet-480.avif 480w, /assets/img/hero-cabanas-gourmet-720.avif 720w, /assets/img/hero-cabanas-gourmet-864.avif 864w" imagesizes="(min-width: 900px) 52vw, 100vw" fetchpriority="high">
+<link rel="preload" as="image" type="image/avif" imagesrcset="/assets/img/hero-cabanas-gourmet-v2-480.avif 480w, /assets/img/hero-cabanas-gourmet-v2-640.avif 640w, /assets/img/hero-cabanas-gourmet-v2-720.avif 720w, /assets/img/hero-cabanas-gourmet-v2-864.avif 864w" imagesizes="(min-width: 1693px) 880px, (min-width: 900px) 52vw, 100vw" fetchpriority="high">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -33,9 +40,11 @@
   "@id": "https://pizzariacabanas.com.br/#pizzaria",
   "name": "Pizzaria Cabanas",
   "url": "https://pizzariacabanas.com.br/",
+  "mainEntityOfPage": "https://pizzariacabanas.com.br/",
   "logo": "https://pizzariacabanas.com.br/icon-512.png",
-  "image": ["https://pizzariacabanas.com.br/og-image.jpg", "https://pizzariacabanas.com.br/assets/img/hero-cabanas-gourmet-864.webp"],
+  "image": ["https://pizzariacabanas.com.br/og-image.jpg", "https://pizzariacabanas.com.br/assets/img/hero-cabanas-gourmet-v2-864.webp"],
   "description": "Pizzaria delivery com pizzas artesanais de fermentação longa, no Carandá Bosque, Campo Grande–MS. Delivery e retirada no balcão.",
+  "disambiguatingDescription": "Pizzaria Cabanas de Campo Grande–MS, na Av. Antônio Teodorowich, 119 – Carandá Bosque. Delivery e retirada no balcão.",
   "address": {"@type": "PostalAddress", "streetAddress": "Av. Antônio Teodorowich, 119", "addressLocality": "Campo Grande", "addressRegion": "MS", "postalCode": "79032-570", "addressCountry": "BR"},
   "geo": {"@type": "GeoCoordinates", "latitude": -20.4473307, "longitude": -54.5762186},
   "telephone": "+55-67-3213-0291",
@@ -122,6 +131,7 @@ ul,ol{padding:0;list-style:none}
 
 /* Hero */
 .hero{position:relative;background:var(--noite);color:var(--papel);overflow:hidden}
+.hero__limite{position:absolute;top:160px;left:0;width:1px;height:1px;pointer-events:none}
 .hero__foto{position:absolute;inset:0;overflow:hidden}
 .hero__foto img{width:100%;height:100%;object-fit:cover;object-position:50% 15%}
 .hero__foto::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(42,10,12,.96) 0%,rgba(42,10,12,.9) 62%,rgba(42,10,12,.3) 84%,rgba(42,10,12,0) 100%)}
@@ -327,10 +337,11 @@ ul,ol{padding:0;list-style:none}
 <main id="topo">
 
 <section class="hero" aria-labelledby="h1">
+  <span class="hero__limite" id="topo-limite" aria-hidden="true"></span>
   <picture class="hero__foto">
-    <source type="image/avif" srcset="/assets/img/hero-cabanas-gourmet-480.avif 480w, /assets/img/hero-cabanas-gourmet-720.avif 720w, /assets/img/hero-cabanas-gourmet-864.avif 864w" sizes="(min-width: 900px) 52vw, 100vw">
-    <source type="image/webp" srcset="/assets/img/hero-cabanas-gourmet-480.webp 480w, /assets/img/hero-cabanas-gourmet-720.webp 720w, /assets/img/hero-cabanas-gourmet-864.webp 864w" sizes="(min-width: 900px) 52vw, 100vw">
-    <img src="/assets/img/hero-cabanas-gourmet-864.webp" alt="Pizza Cabanas Gourmet com peito de peru, cream cheese, geleia de amora e manjericão, da Pizzaria Cabanas, Campo Grande" width="864" height="1080" fetchpriority="high">
+    <source type="image/avif" srcset="/assets/img/hero-cabanas-gourmet-v2-480.avif 480w, /assets/img/hero-cabanas-gourmet-v2-640.avif 640w, /assets/img/hero-cabanas-gourmet-v2-720.avif 720w, /assets/img/hero-cabanas-gourmet-v2-864.avif 864w" sizes="(min-width: 1693px) 880px, (min-width: 900px) 52vw, 100vw">
+    <source type="image/webp" srcset="/assets/img/hero-cabanas-gourmet-v2-480.webp 480w, /assets/img/hero-cabanas-gourmet-v2-640.webp 640w, /assets/img/hero-cabanas-gourmet-v2-720.webp 720w, /assets/img/hero-cabanas-gourmet-v2-864.webp 864w" sizes="(min-width: 1693px) 880px, (min-width: 900px) 52vw, 100vw">
+    <img src="/assets/img/hero-cabanas-gourmet-v2-864.webp" alt="Pizza Cabanas Gourmet com peito de peru, cream cheese, geleia de amora e manjericão, da Pizzaria Cabanas, Campo Grande" width="864" height="1080" fetchpriority="high">
   </picture>
   <div class="hero__in">
     <div class="hero__txt">
@@ -375,9 +386,9 @@ ul,ol{padding:0;list-style:none}
       </a></li>
       <li class="card"><a href="https://cabanaspizzas.menudino.com/?utm_source=site&amp;utm_medium=cardapio" data-track="cardapio" target="_blank" rel="noopener">
         <div class="card__img"><picture>
-          <source type="image/avif" srcset="/assets/img/cabanas-gourmet-400.avif 400w, /assets/img/cabanas-gourmet-800.avif 800w" sizes="(min-width: 1000px) 380px, (min-width: 660px) 50vw, 100vw">
-          <source type="image/webp" srcset="/assets/img/cabanas-gourmet-400.webp 400w, /assets/img/cabanas-gourmet-800.webp 800w" sizes="(min-width: 1000px) 380px, (min-width: 660px) 50vw, 100vw">
-          <img src="/assets/img/cabanas-gourmet-800.webp" alt="Pizza Cabanas Gourmet da Pizzaria Cabanas, Campo Grande" width="800" height="600" loading="lazy" decoding="async">
+          <source type="image/avif" srcset="/assets/img/cabanas-gourmet-v2-400.avif 400w, /assets/img/cabanas-gourmet-v2-640.avif 640w, /assets/img/cabanas-gourmet-v2-800.avif 800w" sizes="(min-width: 1240px) 384px, (min-width: 980px) calc(32vw - 13px), (min-width: 654px) calc(49vw - 20px), calc(100vw - 40px)">
+          <source type="image/webp" srcset="/assets/img/cabanas-gourmet-v2-400.webp 400w, /assets/img/cabanas-gourmet-v2-640.webp 640w, /assets/img/cabanas-gourmet-v2-800.webp 800w" sizes="(min-width: 1240px) 384px, (min-width: 980px) calc(32vw - 13px), (min-width: 654px) calc(49vw - 20px), calc(100vw - 40px)">
+          <img src="/assets/img/cabanas-gourmet-v2-800.webp" alt="Pizza Cabanas Gourmet da Pizzaria Cabanas, Campo Grande" width="800" height="600" loading="lazy" decoding="async">
         </picture></div>
         <div class="card__corpo"><h3>Cabanas Gourmet</h3><p>Peito de peru, cream cheese, geleia de amora e manjericão.</p><span class="card__ver">Ver no cardápio →</span></div>
       </a></li>
@@ -391,9 +402,9 @@ ul,ol{padding:0;list-style:none}
       </a></li>
       <li class="card"><a href="https://cabanaspizzas.menudino.com/?utm_source=site&amp;utm_medium=cardapio" data-track="cardapio" target="_blank" rel="noopener">
         <div class="card__img"><picture>
-          <source type="image/avif" srcset="/assets/img/chocolate-com-morango-400.avif 400w, /assets/img/chocolate-com-morango-800.avif 800w" sizes="(min-width: 1000px) 380px, (min-width: 660px) 50vw, 100vw">
-          <source type="image/webp" srcset="/assets/img/chocolate-com-morango-400.webp 400w, /assets/img/chocolate-com-morango-800.webp 800w" sizes="(min-width: 1000px) 380px, (min-width: 660px) 50vw, 100vw">
-          <img src="/assets/img/chocolate-com-morango-800.webp" alt="Pizza doce de chocolate com morango da Pizzaria Cabanas, Campo Grande" width="800" height="600" loading="lazy" decoding="async">
+          <source type="image/avif" srcset="/assets/img/chocolate-com-morango-v2-400.avif 400w, /assets/img/chocolate-com-morango-v2-640.avif 640w, /assets/img/chocolate-com-morango-v2-800.avif 800w" sizes="(min-width: 1240px) 384px, (min-width: 980px) calc(32vw - 13px), (min-width: 654px) calc(49vw - 20px), calc(100vw - 40px)">
+          <source type="image/webp" srcset="/assets/img/chocolate-com-morango-v2-400.webp 400w, /assets/img/chocolate-com-morango-v2-640.webp 640w, /assets/img/chocolate-com-morango-v2-800.webp 800w" sizes="(min-width: 1240px) 384px, (min-width: 980px) calc(32vw - 13px), (min-width: 654px) calc(49vw - 20px), calc(100vw - 40px)">
+          <img src="/assets/img/chocolate-com-morango-v2-800.webp" alt="Pizza doce de chocolate com morango da Pizzaria Cabanas, Campo Grande" width="800" height="600" loading="lazy" decoding="async">
         </picture></div>
         <div class="card__corpo"><h3>Doces</h3><p>Prestígio · Sonho de Valsa · Chocolate com Morango · Kit Kat · Beijinho</p><span class="card__ver">Ver no cardápio →</span></div>
       </a></li>
@@ -446,7 +457,7 @@ ul,ol{padding:0;list-style:none}
   </div>
 </section>
 
-<section class="sec" aria-labelledby="h-sobre">
+<section class="sec" id="sobre" aria-labelledby="h-sobre">
   <div class="wrap sobre">
     <figure>
       <picture>
@@ -458,8 +469,9 @@ ul,ol{padding:0;list-style:none}
     </figure>
     <div>
       <p class="rotulo">Sobre a Cabanas</p>
-      <h2 class="h2" id="h-sobre">Pizzaria Cabanas: pizza artesanal para pedir em casa</h2>
-      <p class="sobre__txt">A Pizzaria Cabanas faz pizza artesanal com massa de fermentação longa, que fica leve, e ingredientes selecionados. Há mais de 5 anos atendendo o Carandá Bosque e região, trabalhamos com delivery e retirada no balcão: você escolhe no cardápio e recebe em casa ou passa para buscar. Atendemos de terça a domingo, das 18h às 22h45, pelo cardápio online e pelo WhatsApp.</p>
+      <h2 class="h2" id="h-sobre">Pizzaria Cabanas em Campo Grande–MS</h2>
+      <p class="sobre__txt">A Pizzaria Cabanas fica na Av. Antônio Teodorowich, 119 – Carandá Bosque, em Campo Grande–MS. Fazemos pizza artesanal com massa de fermentação longa, que fica leve, e ingredientes selecionados, para delivery e retirada no balcão.</p>
+      <p class="sobre__txt">Há mais de 5 anos atendemos o Carandá Bosque e região. Peça pelo nosso cardápio online ou pelo WhatsApp e escolha entre receber em casa ou retirar no balcão. Nosso atendimento é de terça a domingo, das 18h às 22h45.</p>
       <p class="slogan">Sabor que conquista, pedaço por pedaço.</p>
     </div>
   </div>
@@ -604,6 +616,7 @@ ul,ol{padding:0;list-style:none}
       <address>Av. Antônio Teodorowich, 119 – Carandá Bosque<br>Campo Grande–MS, CEP 79032-570</address>
       <span class="rodape__forte">Delivery e retirada no balcão</span>
       <span class="rodape__slogan">Sabor que conquista, pedaço por pedaço.</span>
+      <a href="#sobre">Sobre a Pizzaria Cabanas de Campo Grande</a>
     </div>
     <div class="col">
       <h2>Contato</h2>
@@ -636,11 +649,17 @@ ul,ol{padding:0;list-style:none}
 <script>
 (function () {
   // Integrado ao banner no início; fundo sólido ao rolar, sem deslocar o conteúdo.
-  var cabecalho = document.querySelector('.topo');
-  function atualizaCabecalho() { cabecalho.classList.toggle('topo--banner', window.scrollY <= 160); }
-  atualizaCabecalho();
-  window.addEventListener('scroll', atualizaCabecalho, { passive: true });
-  window.addEventListener('pageshow', atualizaCabecalho);
+  var cabecalho = document.querySelector('.topo'), limiteTopo = document.getElementById('topo-limite');
+  if ('IntersectionObserver' in window && limiteTopo) {
+    new IntersectionObserver(function (entradas) {
+      cabecalho.classList.toggle('topo--banner', entradas[0].isIntersecting);
+    }).observe(limiteTopo);
+  } else {
+    var atualizaCabecalho = function () { cabecalho.classList.toggle('topo--banner', window.scrollY <= 160); };
+    atualizaCabecalho();
+    window.addEventListener('scroll', atualizaCabecalho, { passive: true });
+    window.addEventListener('pageshow', atualizaCabecalho);
+  }
 
   // Mantém details/summary nativos, animando a altura também ao fechar.
   document.querySelectorAll('.faq details').forEach(function (item) {
@@ -706,7 +725,7 @@ ul,ol{padding:0;list-style:none}
   // Estrutura: [cópia][originais][cópia]. Quando a posição sai do bloco do meio, volta um bloco inteiro
   // (o usuário não percebe porque o conteúdo é idêntico) -> o último emenda no primeiro nos dois sentidos.
   var revs = document.getElementById('revs');
-  if (revs && revs.children.length > 1) {
+  function iniciaCarrossel() {
     var VELOCIDADE = 32;          // px por segundo
     var RETOMA_MS = 1500;         // volta a rodar sozinho depois de soltar
     var originais = Array.prototype.slice.call(revs.children);
@@ -734,7 +753,9 @@ ul,ol{padding:0;list-style:none}
     var pausa = function () { pausado = true; clearTimeout(timer); };
     var retoma = function () { clearTimeout(timer); timer = setTimeout(function () { pos = revs.scrollLeft; pausado = false; }, RETOMA_MS); };
 
+    var frame = 0;
     var quadro = function (t) {
+      frame = 0;
       var dt = ultimo ? Math.min((t - ultimo) / 1000, 0.1) : 0;
       ultimo = t;
       if (!pausado && visivel && !document.hidden) {
@@ -744,9 +765,13 @@ ul,ol{padding:0;list-style:none}
         var n = normaliza(revs.scrollLeft);           // mantém infinito também enquanto o usuário arrasta
         if (Math.abs(n - revs.scrollLeft) > 1) revs.scrollLeft = n;
       }
-      requestAnimationFrame(quadro);
+      if (visivel && !document.hidden) frame = requestAnimationFrame(quadro);
     };
-    requestAnimationFrame(quadro);
+    var iniciaQuadros = function () {
+      if (!frame && visivel && !document.hidden) { ultimo = 0; frame = requestAnimationFrame(quadro); }
+    };
+    var paraQuadros = function () { cancelAnimationFrame(frame); frame = 0; ultimo = 0; };
+    iniciaQuadros();
 
     // Pausa só enquanto a pessoa arrasta; ao soltar, volta a girar sozinho.
     // (Não pausar por hover/foco: o clique no link do card deixava o foco preso e o carrossel parado.)
@@ -780,9 +805,23 @@ ul,ol{padding:0;list-style:none}
     revs.addEventListener('click', function (e) { if (moveu) { e.preventDefault(); moveu = false; } }, true);
 
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (e) { visivel = e[0].isIntersecting; }).observe(revs);
+      new IntersectionObserver(function (e) {
+        visivel = e[0].isIntersecting;
+        visivel ? iniciaQuadros() : paraQuadros();
+      }).observe(revs);
     }
+    document.addEventListener('visibilitychange', function () { document.hidden ? paraQuadros() : iniciaQuadros(); });
     window.addEventListener('resize', function () { var r = (revs.scrollLeft - bloco) / (bloco || 1); mede(); pos = bloco + r * bloco; });
+  }
+  // Prepara as cópias perto da área visível, fora do carregamento da primeira tela.
+  if (revs && revs.children.length > 1) {
+    if ('IntersectionObserver' in window) {
+      var preparaCarrossel = new IntersectionObserver(function (entradas) {
+        if (!entradas[0].isIntersecting) return;
+        preparaCarrossel.disconnect(); iniciaCarrossel();
+      }, { rootMargin: '300px 0px' });
+      preparaCarrossel.observe(revs);
+    } else iniciaCarrossel();
   }
 
   // Barra fixa do celular: só aparece quando os botões do hero saem da tela
